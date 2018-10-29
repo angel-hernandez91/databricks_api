@@ -35,6 +35,12 @@ class Databricks:
 	    flatten(start_dict)
 	    return out
 
+    def _post(self, url, payload):
+    	return requests.post(url, data=json.dumps(payload), headers=self._headers)
+
+    def _get(self, url, headers):
+    	return requests.get(url, data=json.dumps(payload), headers=self._headers)
+
 	# def _cluster_id_payload(self, cluster_name, url):
 	# 	cluster_map = GetClusterList(url).getClusterList()
 		
