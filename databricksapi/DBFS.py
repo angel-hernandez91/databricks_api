@@ -15,7 +15,7 @@ class DBFS(Databricks.Databricks):
 			"handle": handle
 		}
 
-		return self._post(url, payload)
+		return self._post(url, payload).json()
 
 	def closeStream(self, handle):
 		endpoint = 'close'
@@ -24,7 +24,7 @@ class DBFS(Databricks.Databricks):
 		payload = {
 			"handle": handle
 		}
-		return self._post(url, payload)
+		return self._post(url, payload).json()
 
 	def createFile(self, path, overwrite):
 		endpoint = 'create'
@@ -35,7 +35,7 @@ class DBFS(Databricks.Databricks):
 			'overwrite': overwrite
 
 		}
-		return self._post(url, payload)
+		return self._post(url, payload).json()
 
 	def deleteFile(self, path, recursive):
 		endpoint = 'delete'
@@ -46,7 +46,18 @@ class DBFS(Databricks.Databricks):
 			'recurisve': recursive
 		}
 
-		return self._post(url, payload)
+		return self._post(url, payload).json()
+
+	def getStatus(self, path):
+		endpoint = 'get-status'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'path': path
+		}
+		return self._post(url, payload).json()
+
+
 
 
 if __name__ == '__main__':
