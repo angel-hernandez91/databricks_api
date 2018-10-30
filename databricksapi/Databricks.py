@@ -13,8 +13,8 @@ class Databricks:
 		else:
 			return url
 
-	def _set_url(self, url, endpoint):
-		return '{}{}{}'.format(self._url_sanitize(url), self._api_suffix, endpoint)
+	def _set_url(self, url, api_type, endpoint):
+		return '{}{}{}/{}'.format(self._url_sanitize(url), self._api_suffix, api_type, endpoint)
 
 	def _merge_dict(self, *args):
 		merged = args[0].copy()
@@ -36,10 +36,10 @@ class Databricks:
 	    return out
 
     def _post(self, url, payload):
-    	return requests.post(url, data=json.dumps(payload), headers=self._headers)
+    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
 
     def _get(self, url, headers):
-    	return requests.get(url, data=json.dumps(payload), headers=self._headers)
+    	return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
 
 	# def _cluster_id_payload(self, cluster_name, url):
 	# 	cluster_map = GetClusterList(url).getClusterList()
