@@ -1,0 +1,27 @@
+import Databricks
+
+class Groups(Databricks.Databricks):
+	def __init__(self, url):
+		super().__init__(self)
+		self._api_type = 'groups'
+		self._url = url
+
+	def addMember(self, parent_name, name, name_type):
+		endpoint = 'add-member'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		if name_type.lower() == 'user':
+			payload = {
+				'user_name': name,
+			}
+		elif name_type.lower() == 'group':
+			payload = {
+				'group_name': name
+			}
+		else:
+			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+
+		payload['parent_name'] = parent_name
+
+		return self._post(url, payload)
+
