@@ -1,5 +1,9 @@
 import Databricks
 
+class NameTypeNotSupportedException: pass
+
+class ReturnTypeNotSupportedException: pass
+
 class Groups(Databricks.Databricks):
 	def __init__(self, url):
 		super().__init__(self)
@@ -24,4 +28,36 @@ class Groups(Databricks.Databricks):
 		payload['parent_name'] = parent_name
 
 		return self._post(url, payload)
+
+	def createGroup(self, group_name):
+		endpoint = 'group'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'group_name': group_name
+
+		}
+
+		return self._post(url, payload)
+
+	
+	def listGroupMembers(self, group_name, return_type='json'):
+		endpoint = 'list-members'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'group_name': group_name
+		}
+
+		r =  self._post(url, payload)
+
+		if return_type.lower() == 'json':
+			return r
+		elif return_type.lower() == 'list':
+			return [user['user_name'] for user in r['members']]
+		else:
+			raise ReturnTypeNotSupportedException("The return type '{}' is not supported. Please use either 'json' or 'list'".format(return_type))
+
+
+
 
