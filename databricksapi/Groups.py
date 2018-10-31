@@ -58,6 +58,57 @@ class Groups(Databricks.Databricks):
 		else:
 			raise ReturnTypeNotSupportedException("The return type '{}' is not supported. Please use either 'json' or 'list'".format(return_type))
 
+	def listGroups(self):
+		endpoint = 'list'
+		url = self._set_url(self._url, self._api_type, endpoint)
 
+		return self._post(url, payload)
 
+	def listParents(self, name, name_type):
+		endpoinot = 'list-parents'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		if name_type.lower() == 'user':
+			payload = {
+				'user_name': name,
+			}
+		elif name_type.lower() == 'group':
+			payload = {
+				'group_name': name
+			}
+		else:
+			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+
+		return self._post(url, payload)
+
+	def removeMember(self, name, parent_name, name_type):
+		endpoint = 'remove-member'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		if name_type.lower() == 'user':
+			payload = {
+				'user_name': name,
+			}
+		elif name_type.lower() == 'group':
+			payload = {
+				'group_name': name
+			}
+		else:
+			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+
+		payload['parent_name'] = parent_name
+
+		return self._post(url, payload)
+
+	def deleteGroup(self, group_name):
+		endpoint = 'delete'
+		self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'group_name': group_name
+		}
+
+		return self._post(url, payload)
+
+	
 
