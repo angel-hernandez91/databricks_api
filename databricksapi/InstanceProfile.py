@@ -22,13 +22,13 @@ class InstanceProfile(Databricks.Databricks):
 	def listProfiles(self):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
-
+		payload = None
 		return self._post(url, payload)
 
 	def removeProfile(self):
 		endpoint = 'remove'
 		url = self._set_url(self._url, self._api_type, endpoint)
-
+		payload = None
 		return self._post(url, payload)
 
 

@@ -36,7 +36,10 @@ class Databricks:
 	    return out
 
     def _post(self, url, payload):
-    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
+    	if payload is None:
+    		return requests.post(url, headers=self._headers).json()
+    	else:
+	    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
 
     def _get(self, url, headers):
     	return requests.get(url, data=json.dumps(payload), headers=self._headers).json()

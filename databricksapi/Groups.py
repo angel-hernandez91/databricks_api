@@ -61,7 +61,7 @@ class Groups(Databricks.Databricks):
 	def listGroups(self):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
-
+		payload = None
 		return self._post(url, payload)
 
 	def listParents(self, name, name_type):
@@ -110,5 +110,5 @@ class Groups(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	
+
 

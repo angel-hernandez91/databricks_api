@@ -8,7 +8,7 @@ class Jobs(Databricks.Databricks):
 
 	def createJob(cluster, cluster_type, task, task_type, name, 
 				  libraries=None, email_notications=None, timeout_seconds=None,
-				  max_retries=None, min_retry_intervals=None, retry_on_timeout=None,
+				  max_retries=None, min_retry_interval_millis=None, retry_on_timeout=None,
 				  schedule=None, max_concurrent_runs=None):
 		endpoint = 'create'
 		url = self._set_url(self._url, self._api_type, endpoint)
@@ -35,4 +35,47 @@ class Jobs(Databricks.Databricks):
 			raise TaskTypeNotSupportedException(
 				"The task type '{}' is not supported. Use either 'notebook', 'jar', 'python', or 'submit'.".format(cluster_type)
 				)
-		
+
+		if libraries is not None:
+			payload['libraries'] = libraries
+		if email_notications is not None:
+			payload['email_notications'] = email_notications
+		if timeout_seconds is not None:
+			payload['timeout_seconds'] = timeout_seconds
+		if max_retries is not None:
+			payload['max_retries'] = max_retries
+		if min_retry_interval_millis is not None:
+			payload['min_retry_interval_millis'] = min_retry_interval_millis
+		if retry_on_timeout is not None:
+			payload['retry_on_timeout'] = retry_on_timeout
+		if schedule is not None:
+			payload['schedule'] = schedule
+		if max_concurrent_runs is not None:
+			payload['max_concurrent_runs'] = max_concurrent_runs
+
+		return self._post(url, payload)
+
+	def listJobs(self):
+		endpoint = 'list'
+		url = self._set_url(self._url, self._api_type, endpoint)
+		payload = None
+		return self._post(url, payload)
+
+	def deleteJob(self, job_id):
+		endpoint = 'delete'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'job_id': job_id
+		}
+
+		return self._post(url, payload)
+
+	def batchDelete(self, job_ids):
+		for job in job_ids:
+			self.deleteJob(job)
+
+	def deleteAllJobs(self):
+		pass
+
+	
