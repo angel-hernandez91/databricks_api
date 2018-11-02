@@ -78,6 +78,9 @@ class Jobs(Databricks.Databricks):
 	def deleteAllJobs(self):
 		pass
 
+	def mapJobNames(self):
+		pass
+
 	def getJob(self, job_id):
 		endpoint = 'get'
 		url = self._set_url(self._url, self._api_type, endpoint)
@@ -86,3 +89,17 @@ class Jobs(Databricks.Databricks):
 		}
 
 		return self._post(url, payload)
+
+	def resetJob(self, job_id, new_settings):
+		endpoint = 'reset'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'job_id': job_id,
+			'new_settings': new_settings
+		}
+
+		return self._post(url, payload)
+
+	def runJob(self, job_id, notebook_params):
+		endpoint = 'run-now'
