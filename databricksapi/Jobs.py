@@ -101,5 +101,30 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def runJob(self, job_id, notebook_params):
+	def runJob(self, job_id, job_type, params):
 		endpoint = 'run-now'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'job_id': job_id,
+		}
+
+		if job_type == 'notebook':
+			payload['notebook_params'] = params
+		elif job_type == 'jar':
+			payload['jar_params'] = params
+		elif job_type == 'python':
+			payload['python_params'] = params
+		elif job_type == 'submit':
+			payload['spark_submit_params'] = params
+		else:
+			raise TaskTypeNotSupportedException(
+				"The task type '{}' is not supported. Use either 'notebook', 'jar', 'python', or 'submit'.".format(cluster_type)
+				)		
+
+		return self._post(url, payload)
+
+	
+
+
+
