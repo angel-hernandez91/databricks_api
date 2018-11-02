@@ -78,4 +78,11 @@ class Jobs(Databricks.Databricks):
 	def deleteAllJobs(self):
 		pass
 
-	
+	def getJob(self, job_id):
+		endpoint = 'get'
+		url = self._set_url(self._url, self._api_type, endpoint)
+		payload = {
+			'job_id': job_id
+		}
+
+		return self._post(url, payload)
