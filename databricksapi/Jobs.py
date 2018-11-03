@@ -186,5 +186,55 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
+	def runsGet(self, run_id):
+		endpiont = 'runs/submit'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'run_id': run_id
+		}
+
+		return self._post(url, payload)
+
+	def runsExport(self, run_id, views_to_export):
+		endpoint = 'runs/export'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'run_id': run_id,
+			'views_to_export': views_to_export
+		}
+
+		return self._post(url, payload)
+
+	def runsCancel(self, run_id):
+		endpoint = 'runs/cancel'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'run_id': run_id
+		}
+
+		return self._post(url, payload)
+
+	def runsGetOutPut(self, run_id):
+		endpoint = 'runs/get-output'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'run_id': run_id
+		}
+
+		return self._post(url, payload)
+
+	def runsDelete(self, run_id):
+		endpoint = 'runs/delete'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payloads = {
+			'run_id': run_id
+		}
+
+		return self._post(url, payload)
 
 	
