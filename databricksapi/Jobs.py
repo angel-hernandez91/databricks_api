@@ -1,5 +1,17 @@
 import Databricks
 
+class ClusterTypeNotSupportedExpcetion(Exception):
+	def __init__(self, cluster_type):
+		Exception.__init__(self, "The cluster type '{}' is not supported. Use either 'existing' or 'new'.".format(cluster_type))
+
+class TaskTypeNotSupportedException(Exception):
+	def __init__(self, task_type):
+			Exception.__init__(self,	"The task type '{}' is not supported. Use either 'notebook', 'jar', 'python', or 'submit'.".format(task_type))
+
+class RunTypeNotSupportedException(Exception):
+	def __init__(self, run_type):
+		Exception.__init__(self, "The run type '{}' is not supported. Use either 'active' or 'completed'.".format(run_type))
+
 class Jobs(Databricks.Databricks):
 	def __init__(self, url):
 		super().__init__(self, url)
@@ -21,7 +33,7 @@ class Jobs(Databricks.Databricks):
 		elif cluster_type.lower() == 'new':
 			payload['new_cluster'] = cluster
 		else:
-			raise ClusterTypeNotSupportedExpcetion("The cluster type '{}' is not supported. Use either 'existing' or 'new'.".format(cluster_type))
+			raise ClusterTypeNotSupportedExpcetion(cluster_type)
 
 		if task_type.lower() == 'notebook':
 			payload['notebook_task'] = task
@@ -32,9 +44,7 @@ class Jobs(Databricks.Databricks):
 		elif task_type.lower() == 'submit':
 			payload['spark_submit_task'] = task
 		else:
-			raise TaskTypeNotSupportedException(
-				"The task type '{}' is not supported. Use either 'notebook', 'jar', 'python', or 'submit'.".format(cluster_type)
-				)
+			raise TaskTypeNotSupportedException(task_type)
 
 		if libraries is not None:
 			payload['libraries'] = libraries
@@ -118,13 +128,63 @@ class Jobs(Databricks.Databricks):
 		elif job_type == 'submit':
 			payload['spark_submit_params'] = params
 		else:
-			raise TaskTypeNotSupportedException(
-				"The task type '{}' is not supported. Use either 'notebook', 'jar', 'python', or 'submit'.".format(cluster_type)
-				)		
+			raise TaskTypeNotSupportedException(job_type)	
 
 		return self._post(url, payload)
 
+	def runsSubmit(self, run_name, cluster, task, cluster_type, task_type, libraries=None, timeout_seconds=None):
+		endpoint = 'runs/submit'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'run_name': run_name,
+		}
+
+		if cluster_type == 'existing':
+			payload['existing_cluster_id'] = cluster
+		elif cluster_type == 'new':
+			payload['new_cluster'] = cluster
+		else:
+			raise ClusterTypeNotSupportedExpcetion(cluster_type)
+
+		#set the tasks
+		if task_type.lower() == 'notebook':
+			payload['notebook_task'] = task
+		elif task_type.lower() == 'jar':
+			payload['spark_jar_task'] = task
+		elif task_type.lower() == 'python':
+			payload['spark_python_task'] = task
+		elif task_type.lower() == 'submit':
+			payload['spark_submit_task'] = task
+		else:
+			raise TaskTypeNotSupportedException(task_type)
+
+		if libraries is not None:
+			payload['libraries'] = libraries
+
+		if timeout_seconds is not None:
+			payload['timeout_seconds'] = timeout_seconds
+
+		return self._post(url, payload)
+
+	def runsList(self, run, run_type, job_id, offset, limit):
+		endpoint = 'runs/list'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'job_id': job_id,
+			'offset': offset,
+			'limit': limit
+		}
+
+		if run_type.lower() == 'active':
+			payload['active_only'] = run
+		elif run_type.lower() == 'completed':
+			payload['completed_only'] = run
+		else:
+			raise RunTypeNotSupportedException(run_type)
+
+		return self._post(url, payload)
+
+
 	
-
-
-
