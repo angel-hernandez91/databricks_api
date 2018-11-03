@@ -236,5 +236,3 @@ class Jobs(Databricks.Databricks):
 		}
 
 		return self._post(url, payload)
-
-	
