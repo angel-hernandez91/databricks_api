@@ -41,7 +41,7 @@ class Databricks:
     	else:
 	    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
 
-    def _get(self, url, headers):
+    def _get(self, url, payload):
     	return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
 
 	# def _cluster_id_payload(self, cluster_name, url):
