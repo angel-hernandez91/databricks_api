@@ -22,3 +22,13 @@ class Token(Databricks.Databricks):
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		return self._get(url, payload)
+
+	def revokeToken(self, token_id):
+		endpoint = 'delete'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'token_id': token_id
+		}
+
+		return self._post(url, payload)
