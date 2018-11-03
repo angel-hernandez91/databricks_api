@@ -158,3 +158,100 @@ class Clusters(Databricks.Databricks):
 		payload = {
 			'cluster_id': cluster_id
 		}
+
+		return self._post(url, payload)
+
+	def deleteCluster(self, cluster_id):
+		endpoint = 'permanent-delete'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'cluster_id': cluster_id
+		}
+
+		return self._post(url, payload)
+
+	def getCluster(self, cluster_id):
+		endpoint = 'get'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'cluster_id': cluster_id
+		}
+
+		return self._get(url, payload)
+
+
+	def pinCluster(self, cluster_id):
+		endpoint = 'pin'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'cluster_id': cluster_id
+		}
+
+		return self._post(url, payload)
+
+	def unpinCluster(self, cluster_id):
+		endpoint = 'unpin'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'cluster_id': cluster_id
+		}
+
+		return self._post(url, payload)
+
+	def listClusters(self):
+		endpoint = 'list'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._get(url, payload)
+
+	def listNoteTypes(self):
+		endpoint = 'list-node-types'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._get(url, payload)
+
+	def listZones(self):
+		endpoint = 'list-zones'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._get(url, payload)
+
+	def getSparkVersions(self):
+		endpoint = 'spark-versions'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._get(url, payload)
+
+	def getClusterEvents(self, cluster_id, order, start_time=None, end_time=None, event_types=None, offset=None, limit=None):
+		endpoint = 'events'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'cluster_id': cluster_id,
+			'order': order
+		}
+
+		if start_time is not None:
+			payload['start_time'] = start_time
+
+		if end_time is not None:
+			payload['end_time'] = end_time
+
+		if event_types is not None:
+			payload['event_types'] = event_types
+
+		if offset is not None:
+			payload['offset'] = offset
+
+		if limit is not None:
+			payload['limit'] = limit
+
+		return self._post(url, payload)
+
+
+
+
