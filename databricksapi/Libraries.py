@@ -47,5 +47,3 @@ class Libraries(Databricks.Databricks):
 		}
 
 		return self._post(url, payload)
-
-	
