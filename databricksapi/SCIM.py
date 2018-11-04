@@ -100,11 +100,49 @@ class SCIM:
 
 		return self._scim_delete(url)
 
-	def getGroups(self):
+	def getGroups(self, filter_string=None):
 		endpoint = 'Groups'
 		url = self._set_url(self._url, self._api_type, endpoint)
+
+		if filter_string is not None:
+			url = '{}?{}'.format(url, filter_string)
 
 		return self._scim_get(url)		
 
 
+	def getGroupById(self, group_id):
+		endpoint = 'Groups/{}'.format(group_id)
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._scim_get(url)
+
+	def createGroup(self, schemas, displayName, members):
+		endpoint = 'Groups/{}'.format(group_id)
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'schemas': schemas,
+			'displayName': displayName,
+			'members': members
+		}
+
+		return self._scim_post(url, payload)
+
+	def updateGroup(self, group_id, schemas, operations):
+		endpoint = 'Groups/{}'.format(group_id)
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = {
+			'schemas': schemas,
+			'Operations': operations
+		}		
+
+		return self._scim_patch(url, payload)
+
+
+	def deleteGroup(self, group_id):
+		endpoint = 'Groups/{}'.format(group_id)
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._scim_delete(url, payload)
 
