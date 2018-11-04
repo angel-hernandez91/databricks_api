@@ -206,25 +206,25 @@ class Clusters(Databricks.Databricks):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		return self._get(url, payload)
+		return self._get(url)
 
 	def listNoteTypes(self):
 		endpoint = 'list-node-types'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		return self._get(url, payload)
+		return self._get(url)
 
 	def listZones(self):
 		endpoint = 'list-zones'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		return self._get(url, payload)
+		return self._get(url)
 
 	def getSparkVersions(self):
 		endpoint = 'spark-versions'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		return self._get(url, payload)
+		return self._get(url)
 
 	def getClusterEvents(self, cluster_id, order, start_time=None, end_time=None, event_types=None, offset=None, limit=None):
 		endpoint = 'events'

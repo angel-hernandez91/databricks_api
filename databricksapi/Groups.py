@@ -61,7 +61,7 @@ class Groups(Databricks.Databricks):
 	def listGroups(self):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
-		payload = None
+		
 		return self._post(url, payload)
 
 	def listParents(self, name, name_type):
@@ -79,7 +79,7 @@ class Groups(Databricks.Databricks):
 		else:
 			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
 
-		return self._post(url, payload)
+		return self._post(url)
 
 	def removeMember(self, name, parent_name, name_type):
 		endpoint = 'remove-member'
