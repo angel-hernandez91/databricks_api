@@ -35,14 +35,17 @@ class Databricks:
 	    flatten(start_dict)
 	    return out
 
-    def _post(self, url, payload):
+    def _post(self, url, payload=None):
     	if payload is None:
     		return requests.post(url, headers=self._headers).json()
     	else:
 	    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
 
-    def _get(self, url, payload):
-    	return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
+    def _get(self, url, payload=None):
+    	if payload is None:
+    		return requests.post(url, headers=self._headers).json()
+    	else:
+    		return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
 
 	# def _cluster_id_payload(self, cluster_name, url):
 	# 	cluster_map = GetClusterList(url).getClusterList()
