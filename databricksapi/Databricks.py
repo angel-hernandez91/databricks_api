@@ -23,29 +23,29 @@ class Databricks:
 		return merged
 
 	def _json_flattener(self, start_dict):
-	    out = {}
+		out = {}
 
-	    def flatten(temp_dict, name=''):
-	        if isinstance(temp_dict, dict):
-	            for key in temp_dict:
-	                flatten(temp_dict[key], key)
-	        else:
-	            out[name] = temp_dict
+		def flatten(temp_dict, name=''):
+			if isinstance(temp_dict, dict):
+				for key in temp_dict:
+					flatten(temp_dict[key], key)
+			else:
+				out[name] = temp_dict
 
-	    flatten(start_dict)
-	    return out
+		flatten(start_dict)
+		return out
 
-    def _post(self, url, payload=None):
-    	if payload is None:
-    		return requests.post(url, headers=self._headers).json()
-    	else:
-	    	return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
+	def _post(self, url, payload=None):
+		if payload is None:
+			return requests.post(url, headers=self._headers).json()
+		else:
+			return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
 
-    def _get(self, url, payload=None):
-    	if payload is None:
-    		return requests.post(url, headers=self._headers).json()
-    	else:
-    		return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
+	def _get(self, url, payload=None):
+		if payload is None:
+			return requests.post(url, headers=self._headers).json()
+		else:
+			return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
 
 	# def _cluster_id_payload(self, cluster_name, url):
 	# 	cluster_map = GetClusterList(url).getClusterList()

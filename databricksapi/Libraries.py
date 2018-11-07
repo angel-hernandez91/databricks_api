@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class Libraries(Databricks.Databricks):
 	def __init__(self, url):

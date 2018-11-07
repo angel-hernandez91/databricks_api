@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class SCIM:
 	def __init__(self, url):

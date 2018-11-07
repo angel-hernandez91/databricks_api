@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class ValueTypeNotSupportedException(Exception):
 	def __init__(self, value_type):

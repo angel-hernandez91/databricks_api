@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class ClusterTypeNotSupportedExpcetion(Exception):
 	def __init__(self, cluster_type):

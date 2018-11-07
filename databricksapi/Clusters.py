@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class WorkerTypeNotSupportedException(Exception):
 	def __init__(self, worker_type):

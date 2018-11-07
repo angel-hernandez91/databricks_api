@@ -1,4 +1,4 @@
-import Databricks
+from . import Databricks
 
 class Token(Databricks.Databricks):
 	def __init__(self, url):
