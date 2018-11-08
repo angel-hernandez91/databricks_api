@@ -3,3 +3,17 @@
 
 ## Installation
 You can either use `pip install databricksapi` to install it globally, or you can clone the repository. Please note that only compatability with Python 3.7+ is guaranteed.
+
+## APIs Included
+* Token
+* Secrets
+* Clusters
+* SCIM (Experimental)
+* Jobs
+* DBFS
+* Groups
+* Instance Profiles
+* Libraries
+* Workspace
+
+## Specific Documentation is Still Pending
