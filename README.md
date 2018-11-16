@@ -56,5 +56,7 @@ db_api.revokeToken('5715498424f15ee0213be729257b53fc35a47d5953e3bdfd8ed22a0b93b3
 The Secrets API allows you to manage secrets, secret scopes, and access permissions.
 
 ## Methods
-
+1. createSecretScope(*scope*, *initial_manage_principal*)
+2. deleteSecretScope(*scope*)
+3. 
 
