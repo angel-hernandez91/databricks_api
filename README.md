@@ -58,5 +58,11 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 ## Methods
 1. createSecretScope(*scope*, *initial_manage_principal*)
 2. deleteSecretScope(*scope*)
-3. 
-
+3. listSecretScopes(*scope*)
+4. putSeceret(*value*, *value_type*, *scope*, *key*)
+5. deleteSecretI*scope*, *key*)
+6. listSecrets(*scope*)
+7. putSecretACL(*scope*, *principal*, *permission*)
+8. deleteSecretACL(*scope*, *principal*)
+9. getSecretACL(*scope, *principal*)
+10. listSecretACL(*scope*, *principal*)
