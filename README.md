@@ -55,10 +55,10 @@ db_api.revokeToken('5715498424f15ee0213be729257b53fc35a47d5953e3bdfd8ed22a0b93b3
 ## Secrets API
 The Secrets API allows you to manage secrets, secret scopes, and access permissions.
 
-## Methods
+### Methods
 1. createSecretScope(*scope*, *initial_manage_principal*)
 2. deleteSecretScope(*scope*)
-3. listSecretScopes(*scope*)
+3. listSecretScopes()
 4. putSeceret(*value*, *value_type*, *scope*, *key*)
 5. deleteSecretI*scope*, *key*)
 6. listSecrets(*scope*)
@@ -66,3 +66,39 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 8. deleteSecretACL(*scope*, *principal*)
 9. getSecretACL(*scope, *principal*)
 10. listSecretACL(*scope*, *principal*)
+
+#### createSecretScope(*scope*, *initial_manage_princial*)
+Creates a new secret scope.
+
+The scope name must consist of alphanumeric characters, dashes, underscores, and periods, and may not exceed 128 characters. The maximum number of scopes in a workspace is 100.
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+initial_manage_princial = 'users'
+db_api.createSecretScope(scope, initial_manage_princial)
+```
+
+#### deleteSecretScope(*scope*)
+Delete a secret scope.
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+db_api.deleteSecretScope(scope)
+```
+
+#### listSecretScopes()
+
+
+
+
+
+
+
+
+
+
+

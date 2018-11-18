@@ -30,15 +30,11 @@ class Secrets:
 
 		return self._post(url, payload)
 
-	def listSecretScopes(self, scopes):
+	def listSecretScopes(self):
 		endpoint = 'scopes/list'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'scope': scope
-		}
-
-		return self._get(url, payload)
+		return self._get(url)
 
 	def putSeceret(self, value, value_type, scope, key):
 		endpoint = 'put'
