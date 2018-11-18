@@ -60,7 +60,7 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 2. deleteSecretScope(*scope*)
 3. listSecretScopes()
 4. putSeceret(*value*, *value_type*, *scope*, *key*)
-5. deleteSecretI*scope*, *key*)
+5. deleteSecret(*scope*, *key*)
 6. listSecrets(*scope*)
 7. putSecretACL(*scope*, *principal*, *permission*)
 8. deleteSecretACL(*scope*, *principal*)
@@ -71,6 +71,7 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 Creates a new secret scope.
 
 The scope name must consist of alphanumeric characters, dashes, underscores, and periods, and may not exceed 128 characters. The maximum number of scopes in a workspace is 100.
+
 ```python
 url = 'https://url.for.databricks.net'
 db_api = Token(url)
@@ -81,6 +82,7 @@ db_api.createSecretScope(scope, initial_manage_princial)
 ```
 
 #### deleteSecretScope(*scope*)
+
 Delete a secret scope.
 ```python
 url = 'https://url.for.databricks.net'
@@ -92,6 +94,7 @@ db_api.deleteSecretScope(scope)
 
 #### listSecretScopes()
 List all secret scopes in the workspace
+
 ```python
 url = 'https://url.for.databricks.net'
 db_api = Token(url)
@@ -102,7 +105,7 @@ db_api.listSecretScopes()
 #### putSecret(*value*, *value_type*, *scope*, *key*)  
 Inserts a secret under the provided scope with the given name. If a secret already exists with the same name, this command overwrites the existing secret’s value. The server encrypts the secret using the secret scope’s encryption settings before storing it. You must have WRITE or MANAGE permission on the secret scope.
 
-
+The `value_type` parameter can either be set to `string` or `bytes` depending on the type fo value the user passes in.
 
 ```python
 url = 'https://url.for.databricks.net'
@@ -111,13 +114,89 @@ db_api = Token(url)
 #set parameters
 value = 'BeepBoop'
 value_type = 'string'
+scope = 'SomeSecretScope'
+key = 'uniqueScopekey'
 
-db_api.putSecret()
-
+db_api.putSecret(value, value_type, scope, key)
 ```
 
+#### deleteSecret(*scope*, *key*)
+Deletes the secret stored in this secret scope. You must have WRITE or MANAGE permission on the secret scope.
 
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
 
+scope = 'SomeSecretScope'
+key = 'uniqueScopekey'
+
+db_api.deleteSecret(scope, key)
+```
+
+#### listSecrets(*scope*)
+Lists the secret keys that are stored at this scope. This is a metadata-only operation; secret data cannot be retrieved using this API. Users need READ permission to make this call.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+
+db_api.listSecrets(scope)
+```
+
+#### putSecretACL(*scope*, *principal*, *permission*)
+Creates or overwrites the ACL associated with the given principal (user or group) on the specified scope point. In general, a user or group will use the most powerful permission available to them
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+prinicpal = 'users'
+permission = 'READ'
+
+db_api.putSecretACL(scope, principal, permission)
+```
+
+#### deleteSecretACL(*scope*, *principal*)  
+Deletes the given ACL on the given scope.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+prinicpal = 'users'
+
+db_api.deleteSecretACL(scope, principal)
+```
+
+#### getSecretACL(*scope, *principal*)
+Describes the details about the given ACL, such as the group and permission.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+prinicpal = 'users'
+
+db_api.getSecretACL(scope, principal)
+```
+
+#### listSecretACL(*scope*, *principal*)
+Lists the ACLs set on the given scope.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+scope = 'SomeSecretScope'
+prinicpal = 'users'
+
+db_api.listSecretACL(scope, principal)
+```
 
 
 
