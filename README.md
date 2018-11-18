@@ -91,6 +91,33 @@ db_api.deleteSecretScope(scope)
 ```
 
 #### listSecretScopes()
+List all secret scopes in the workspace
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+db_api.listSecretScopes()
+```
+
+#### putSecret(*value*, *value_type*, *scope*, *key*)  
+Inserts a secret under the provided scope with the given name. If a secret already exists with the same name, this command overwrites the existing secret’s value. The server encrypts the secret using the secret scope’s encryption settings before storing it. You must have WRITE or MANAGE permission on the secret scope.
+
+
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+#set parameters
+value = 'BeepBoop'
+value_type = 'string'
+
+db_api.putSecret()
+
+```
+
+
+
 
 
 
