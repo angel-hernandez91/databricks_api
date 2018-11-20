@@ -208,7 +208,7 @@ class Clusters(Databricks.Databricks):
 
 		return self._get(url)
 
-	def listNoteTypes(self):
+	def listNodeTypes(self):
 		endpoint = 'list-node-types'
 		url = self._set_url(self._url, self._api_type, endpoint)
 

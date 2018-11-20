@@ -198,6 +198,26 @@ prinicpal = 'users'
 db_api.listSecretACL(scope, principal)
 ```
 
+## Clusters API
+The Clusters API allows you to create, start, edit, list, terminate, and delete clusters via the API. The maximum allowed size of a request to the Clusters API is 10MB.
+
+### Methods
+1. createCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
+2. editCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
+3. startCluster(*cluster_id*)
+4. restartCluster(*cluster_id*)
+5. resizeCluster(*cluster_id*, *worker*, *worker_type*)
+6. terminateCluster(*cluster_id*)
+7. deleteCluster(*cluster_id*)
+8. getCluster(*cluster_id*)
+9. pinCluster(*cluster_id*)
+10. unpinCluster(*cluster_id*)
+11. listClusters()
+12. listNodeTypes()
+13. listZones()
+14. getSparkVersions()
+15. getClusterEvents(*cluster_id*, *order*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
+
 
 
 
