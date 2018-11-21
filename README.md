@@ -218,6 +218,28 @@ The Clusters API allows you to create, start, edit, list, terminate, and delete 
 14. getSparkVersions()
 15. getClusterEvents(*cluster_id*, *order*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
 
+#### createCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
+
+Creates a new Spark cluster. This method acquires new instances from the cloud provider if necessary. This method is asynchronous; the returned cluster_id can be used to poll the cluster state. When this method returns, the cluster is in a PENDING state. The cluster is usable once it enters a RUNNING state.
+
+The `worker_type` can be either `workers` or `autoscale`. If a `autoscale` is set, then the `min_workers` and `max_workers` must be specified. 
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+worker = 25
+worker_type = 'workers'
+cluster_name = 'TestCluster'
+spark_version = '4.0.x-scala2.11'
+cluster_log_conf = '/dbfs/log/path'
+node_type_id = 'i3.xlarge'
+
+db_api.createCluster(worker=worker, worker_type=worker_type, cluster_name=cluster_name, spark_version=spark_version, cluster_log_conf=cluster_log_conf, node_type_id=node_type_id)
+
+db_api.listSecretACL(scope, principal)
+```
+
 
 
 
