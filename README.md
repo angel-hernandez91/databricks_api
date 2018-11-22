@@ -240,8 +240,10 @@ db_api.createCluster(worker=worker, worker_type=worker_type, cluster_name=cluste
 db_api.listSecretACL(scope, principal)
 ```
 
+#### editCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
+Edit an existings clusters configuration. For implermentation and usage, see `createCluster`.
 
-
+#### startCluster(*cluster_id*)
 
 
 
