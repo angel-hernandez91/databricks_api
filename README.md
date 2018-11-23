@@ -216,7 +216,7 @@ The Clusters API allows you to create, start, edit, list, terminate, and delete 
 12. listNodeTypes()
 13. listZones()
 14. getSparkVersions()
-15. getClusterEvents(*cluster_id*, *order*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
+15. getClusterEvents(*cluster_id*, *order='DESC'*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
 
 #### createCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
 
@@ -236,12 +236,25 @@ cluster_log_conf = '/dbfs/log/path'
 node_type_id = 'i3.xlarge'
 
 db_api.createCluster(worker=worker, worker_type=worker_type, cluster_name=cluster_name, spark_version=spark_version, cluster_log_conf=cluster_log_conf, node_type_id=node_type_id)
-
-db_api.listSecretACL(scope, principal)
 ```
 
 #### editCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
-Edit an existings clusters configuration. For implermentation and usage, see `createCluster`.
+
+Edit an existings clusters configuration.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+worker = 35
+worker_type = 'workers'
+cluster_name = 'TestCluster'
+spark_version = '4.0.x-scala2.11'
+cluster_log_conf = '/dbfs/new/log/path'
+node_type_id = 'i5.xlarge'
+
+db_api.editCluster(worker=worker, worker_type=worker_type, cluster_name=cluster_name, spark_version=spark_version, cluster_log_conf=cluster_log_conf, node_type_id=node_type_id)
+```
 
 #### startCluster(*cluster_id*) 
 Starts a terminated Spark cluster given its ID.
@@ -306,6 +319,19 @@ cluster_id = '1202-211320-brick1'
 db_api.deleteCluster(cluster_id)
 ```
 
+#### getCluster(*cluster_id*)
+Returns information about all pinned clusters, currently active clusters, up to 70 of the most recently terminated interactive clusters in the past 30 days, and up to 30 of the most recently terminated job clusters in the past 30 days.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.getCluster(cluster_id)
+```
+
+
 #### pinCluster(*cluster_id*)
 Pinning a cluster ensures that the cluster is always returned by the List API. Pinning a cluster that is already pinned has no effect.
 
@@ -327,7 +353,7 @@ db_api = Token(url)
 
 cluster_id = '1202-211320-brick1'
 
-db_api.pinCluster(cluster_id)
+db_api.unpinCluster(cluster_id)
 ```
 
 #### listClusters()
@@ -341,6 +367,47 @@ db_api.listClusters()
 ```
 
 #### listNodeTypes()
+Returns a list of supported Spark node types. These node types can be used to launch a cluster.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+db_api.listNodeTypes()
+```
+
+#### listZones()
+Returns a list of availability zones where clusters can be created in (ex: us-west-2a). These zones can be used to launch a cluster.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+db_api.listZones()
+```
+
+#### getSparkVersions()
+Returns the list of available Spark versions. These versions can be used to launch a cluster.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+db_api.getSparkVersions()
+```
+
+#### getClusterEvents(*cluster_id*, *order='DESC'*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
+Retrieves a list of events about the activity of a cluster. This API is paginated. If there are more events to read, the response includes all the parameters necessary to request the next page of events.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.getClusterEvents(cluster_id)
+```
+
 
 
 

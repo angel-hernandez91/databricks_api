@@ -226,7 +226,7 @@ class Clusters(Databricks.Databricks):
 
 		return self._get(url)
 
-	def getClusterEvents(self, cluster_id, order, start_time=None, end_time=None, event_types=None, offset=None, limit=None):
+	def getClusterEvents(self, cluster_id, order='DESC', start_time=None, end_time=None, event_types=None, offset=None, limit=None):
 		endpoint = 'events'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
