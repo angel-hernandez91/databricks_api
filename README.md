@@ -243,9 +243,104 @@ db_api.listSecretACL(scope, principal)
 #### editCluster(*worker*, *worker_type*, *cluster_name*, *spark_version*, *cluster_log_conf*, *node_type_id*, *driver_node_type_id=None*, *spark_conf=None*, *aws_attributes=None*, *ssh_public_keys=None*, *custom_tags=None*, *init_scripts=None*, *spark_env_vars=None*, *autotermination_minutes=None*, *enable_elastic_disk=None*)
 Edit an existings clusters configuration. For implermentation and usage, see `createCluster`.
 
-#### startCluster(*cluster_id*)
+#### startCluster(*cluster_id*) 
+Starts a terminated Spark cluster given its ID.
 
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
 
+cluster_id = '1202-211320-brick1'
+db_api.startCluster(cluster_id)
+```
+
+#### restartCluster(*cluster_id*)
+Restarts a Spark cluster given its id. If the cluster is not in a RUNNING state, nothing will happen.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+db_api.restartCluster(cluster_id)
+```
+
+#### resizeCluster(*cluster_id*, *worker*, *worker_type*)
+Resizes a cluster to have a desired number of workers. This will fail unless the cluster is in a RUNNING state.
+
+The parameter `worker_type` can be one of `workers` or `autoscale`. 
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+workers = 30
+
+db_api.resizeCluster(cluster_id, workers, worker_type='workers')
+```
+
+#### terminateCluster(*cluster_id*)
+Terminates a Spark cluster given its id. The cluster is removed asynchronously. Once the termination has completed, the cluster will be in a TERMINATED state. If the cluster is already in a TERMINATING or TERMINATED state, nothing will happen.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.terminateCluster(cluster_id)
+```
+
+#### deleteCluster(*cluster_id*)
+Permanently deletes a Spark cluster. If the cluster is running, it is terminated and its resources are asynchronously removed. If the cluster is terminated, then it is immediately removed.
+
+You cannot perform any action on a permanently deleted cluster and a permanently deleted cluster is no longer returned in the cluster list.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.deleteCluster(cluster_id)
+```
+
+#### pinCluster(*cluster_id*)
+Pinning a cluster ensures that the cluster is always returned by the List API. Pinning a cluster that is already pinned has no effect.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.pinCluster(cluster_id)
+```
+
+#### unpinCluster(*cluster_id*)
+Unpinning a cluster will allow the cluster to eventually be removed from the list returned by the List API. Unpinning a cluster that is not pinned has no effect.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+cluster_id = '1202-211320-brick1'
+
+db_api.pinCluster(cluster_id)
+```
+
+#### listClusters()
+Retrieves the information for a cluster given its identifier. Clusters can be described while they are running, or up to 30 days after they are terminated.
+
+```python
+url = 'https://url.for.databricks.net'
+db_api = Token(url)
+
+db_api.listClusters()
+```
+
+#### listNodeTypes()
 
 
 
