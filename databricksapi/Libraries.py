@@ -2,6 +2,7 @@ from . import Databricks
 
 class Libraries(Databricks.Databricks):
 	def __init__(self, url):
+		super().__init__()
 		self._url = url
 		self._api_type = 'libraries'
 
@@ -23,7 +24,7 @@ class Libraries(Databricks.Databricks):
 			'cluster_id': cluster_id
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def installLibrary(self, cluster_id, libraries):
 		endpoint = 'install'
