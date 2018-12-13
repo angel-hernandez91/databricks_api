@@ -6,6 +6,7 @@ class WorkerTypeNotSupportedException(Exception):
 
 class Clusters(Databricks.Databricks):
 	def __init__(self, url):
+		super().__init__()
 		self._url = url
 		self._api_type = 'clusters'
 
@@ -251,7 +252,5 @@ class Clusters(Databricks.Databricks):
 			payload['limit'] = limit
 
 		return self._post(url, payload)
-
-
 
 
