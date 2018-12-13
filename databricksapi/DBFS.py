@@ -2,7 +2,7 @@ from . import Databricks
 
 class DBFS(Databricks.Databricks):
 	def __init__(self, url):
-		super().__init__(self)
+		super().__init__()
 		self._api_type = 'dbfs'
 		self._url = url
 
@@ -88,7 +88,7 @@ class DBFS(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def putFiles(self, path, overwrite, contents=None):
+	def putFiles(self, path, overwrite, files, contents=None):
 		endpoint = 'put'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -101,7 +101,7 @@ class DBFS(Databricks.Databricks):
 		if contents is None:
 			payload.pop('contents')
 
-		return self._post(url, payload)
+		return self._post(url, payload=payload, files=files)
 
 	def readFiles(self, path, offset, length):
 		endpoint = 'read'
@@ -114,7 +114,6 @@ class DBFS(Databricks.Databricks):
 		}
 
 		return self._post(url, payload)
-
 
 
 
