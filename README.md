@@ -446,4 +446,10 @@ The DBFS API is a Databricks API that makes it simple to interact with various d
 The Groups API allows you to manage groups of users via the API. You must be a Databricks administrator to invoke this API.
 
 ### Methods
-
+1. addMember(*parent_name*, *name*, *name_type*)
+2. createGroup(*group_name*)
+3. listGroupMembers(*group_name*, *return_type='json'*)
+4. listGroups()
+5. listParents(*name*, *name_type*)
+6. removeMember(*name*, *parent_name*, *name_type*)
+7. deleteGroup(*group_name*)
