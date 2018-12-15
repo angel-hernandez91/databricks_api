@@ -408,8 +408,24 @@ cluster_id = '1202-211320-brick1'
 db_api.getClusterEvents(cluster_id)
 ```
 
+## Jobs API
+The Jobs API allows you to create, edit, and delete jobs via the API. The maximum allowed size of a request to the Jobs API is 10MB.
 
-
+### Methods
+1. createJob(*cluster*, *cluster_type*, *task*, *task_type*, *name*, *libraries=None*, *email_notications=None*, *timeout_seconds=None*, *max_retries=None*, *min_retry_interval_millis=None*, *retry_on_timeout=None*,*schedule=None*, *max_concurrent_runs=None*)
+2. listJobs()
+3. deleteJob(*job_id*)
+4. batchDelete(*job_ids*)
+5. getJob(*job_id*)
+6. resetJob(*job_id*, *new_settings*)
+7. runJob(*job_id*, *job_type*, *params*)
+8. runsSubmit(*run_name*, *cluster*, *task*, *cluster_type*, *task_type*, *libraries=None*, *timeout_seconds=None*)
+9. runsList(*run*, *run_type*, *job_id*, *offset*, *limit*)
+10. runsGet(*run_id*)
+11. runsExport(*run_id*, *views_to_export*)
+12. runsCancel(*run_id*)
+13. runsGetOutput(*run_id*)
+14. runsDelete(*run_id*)
 
 
 

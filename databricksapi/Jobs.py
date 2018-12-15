@@ -217,7 +217,7 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def runsGetOutPut(self, run_id):
+	def runsGetOutput(self, run_id):
 		endpoint = 'runs/get-output'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
