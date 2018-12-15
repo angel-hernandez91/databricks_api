@@ -6,6 +6,7 @@ class ValueTypeNotSupportedException(Exception):
 
 class Secrets:
 	def __init__(self, url):
+		super().__init__()
 		self._url = url
 		self._api_type = 'secrets'
 
