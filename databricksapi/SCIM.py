@@ -2,6 +2,7 @@ from . import Databricks
 
 class SCIM:
 	def __init__(self, url):
+		super().__init__()
 		self._url = url
 		self._api_type = 'preview/scim/v2'
 		self._write_headers = {'content-type': 'application/scim+json', 'authorization': self._token}
