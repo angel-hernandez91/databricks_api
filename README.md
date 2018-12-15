@@ -425,8 +425,25 @@ The Jobs API allows you to create, edit, and delete jobs via the API. The maximu
 11. runsExport(*run_id*, *views_to_export*)
 12. runsCancel(*run_id*)
 13. runsGetOutput(*run_id*)
-14. runsDelete(*run_id*)
+14. runsDelete(*run_id*) 
 
+## DBFS API
+The DBFS API is a Databricks API that makes it simple to interact with various data sources without having to include your credentials every time you read a file. 
 
+### Methods
+1. addBlock(*data*, *handle*)
+2. closeStream(*handle*)
+3. createFile(*path*, *overwrite*)
+4. deleteFile(*path*, *recursive*)
+5. getStatus(*path*)
+6. listFiles(*path*)
+7. makeDirs(*path*)
+8. moveFiles(*source_path*, *target_path*)
+9. putFiles(*path*, *overwrite*, *files*, *contents=None*)
+10. readFiles(*path*, *offset*, *length*)
 
+## Groups API
+The Groups API allows you to manage groups of users via the API. You must be a Databricks administrator to invoke this API.
+
+### Methods
 
