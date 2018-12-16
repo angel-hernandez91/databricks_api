@@ -453,3 +453,30 @@ The Groups API allows you to manage groups of users via the API. You must be a D
 5. listParents(*name*, *name_type*)
 6. removeMember(*name*, *parent_name*, *name_type*)
 7. deleteGroup(*group_name*)
+
+## Instance Profiles API
+The Instance Profiles API allows admins to add, list, and remove instance profiles that users can launch clusters with. Regular users can list the instance profiles available to them.
+
+### Methods
+1. addProfile(*profile_arn*, *skip_validation=None*)
+2. listProfiles()
+3. removeProfile()
+
+## Libraries API
+The Libraries API allows you to install and uninstall libraries and get the status of libraries on a cluster via the API.
+
+### Methods
+1. allClusterStatuses(*status*)
+2. clusterStatus(*cluster_id*)
+3. installLibrary(*cluster_id*, *libraries*)
+4. uninstallLibrary(*cluster_id*, *libraries*)
+
+## Worspace API
+1. deleteWorkspace(*path*, *recursive*)
+2. exportWorkspace(*path*, *export_format*, *direct_download*)
+3. getWorkspaceStatus(*path*)
+4. importWorkspace(*path*, *export_format*, *language*, *content*, *overwrite*)
+5. listWorkspace(*path*)
+6. mkdirsWorkspace(*path*)
+
+
