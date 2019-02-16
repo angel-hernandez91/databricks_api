@@ -16,6 +16,16 @@ You can either use `pip install databricksapi` to install it globally, or you ca
 * Libraries
 * Workspace
 
+## Imports
+The modules above can be imported as follows
+```python
+from databricksapi import Token, Jobs, DBFS
+url = 'https://url.for.databricks.net'
+
+token_instance = Token(url)
+jobs_instance = Jobs(url)
+```
+
 ## Token API
 The Token API allows any user to create, list, and revoke tokens that can be used to authenticate and access Databricks REST APIs. Initial authentication to this API is the same as for all of the Databricks API endpoints.
 
@@ -242,6 +252,8 @@ db_api.createCluster(worker=worker, worker_type=worker_type, cluster_name=cluste
 
 Edit an existings clusters configuration.
 
+The `worker_type` can be either `workers` or `autoscale`. If a `autoscale` is set, then the `min_workers` and `max_workers` must be specified.
+
 ```python
 url = 'https://url.for.databricks.net'
 db_api = Token(url)
@@ -399,6 +411,8 @@ db_api.getSparkVersions()
 #### getClusterEvents(*cluster_id*, *order='DESC'*, *start_time=None*, *end_time=None*, *event_types=None*, *offset=None*, *limit=None*)
 Retrieves a list of events about the activity of a cluster. This API is paginated. If there are more events to read, the response includes all the parameters necessary to request the next page of events.
 
+
+
 ```python
 url = 'https://url.for.databricks.net'
 db_api = Token(url)
@@ -415,7 +429,7 @@ The Jobs API allows you to create, edit, and delete jobs via the API. The maximu
 1. createJob(*cluster*, *cluster_type*, *task*, *task_type*, *name*, *libraries=None*, *email_notications=None*, *timeout_seconds=None*, *max_retries=None*, *min_retry_interval_millis=None*, *retry_on_timeout=None*,*schedule=None*, *max_concurrent_runs=None*)
 2. listJobs()
 3. deleteJob(*job_id*)
-4. batchDelete(*job_ids*)
+4. batchDelete(*\*args*)
 5. getJob(*job_id*)
 6. resetJob(*job_id*, *new_settings*)
 7. runJob(*job_id*, *job_type*, *params*)
@@ -426,6 +440,24 @@ The Jobs API allows you to create, edit, and delete jobs via the API. The maximu
 12. runsCancel(*run_id*)
 13. runsGetOutput(*run_id*)
 14. runsDelete(*run_id*) 
+
+#### createJob(*cluster*, *cluster_type*, *task*, *task_type*, *name*, *libraries=None*, *email_notications=None*, *timeout_seconds=None*, *max_retries=None*, *min_retry_interval_millis=None*, *retry_on_timeout=None*,*schedule=None*, *max_concurrent_runs=None*)
+The `cluster_type` parameter can be one of `existing` or `new`.
+The `task_type` parameter must be one of `notebook`, `jar`, `submit`, or `python`.
+
+All other parameters are documented in the Databricks Rest API.
+
+#### batchDelete(*\*args*)
+Takes in a comma separated list of Job IDs to be deleted. This method is a wrapper around the `deleteJob` method.
+
+#### runJob(*job_id*, *job_type*, *params*)
+The `job_type` parameter must be one of `notebook`, `jar`, `submit` or `python`.
+
+#### runsSubmit(*run_name*, *cluster*, *task*, *cluster_type*, *task_type*, *libraries=None*, *timeout_seconds=None*)
+The `cluster_type` parameter can be one of `existing` or `new`.
+
+#### runsList(*run*, *run_type*, *job_id*, *offset*, *limit*)
+The `run_type` parameter must be one of `completed` or `active`.	
 
 ## DBFS API
 The DBFS API is a Databricks API that makes it simple to interact with various data sources without having to include your credentials every time you read a file. 
@@ -453,6 +485,15 @@ The Groups API allows you to manage groups of users via the API. You must be a D
 5. listParents(*name*, *name_type*)
 6. removeMember(*name*, *parent_name*, *name_type*)
 7. deleteGroup(*group_name*)
+
+#### listGroupMembers(*group_name*, *return_type='json'*)
+The default `return_type` can be one of `json` or `list`, by default the paramter is set to `json`. This is provide to simplify pulling usernames from the default return time which can be cumbersome.
+
+#### listParents(*name*, *name_type*)
+The `name_type` parameter must be one of `user` or `group`.
+
+#### removeMember(*name*, *parent_name*, *name_type*)
+The `name_type` parameter must be one of `user` or `group`.
 
 ## Instance Profiles API
 The Instance Profiles API allows admins to add, list, and remove instance profiles that users can launch clusters with. Regular users can list the instance profiles available to them.

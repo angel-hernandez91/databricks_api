@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Databricks
+databricksapi/*.pyc
+
 # C extensions
 *.so
 
