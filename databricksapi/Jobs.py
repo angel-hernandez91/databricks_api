@@ -81,8 +81,8 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def batchDelete(self, job_ids):
-		for job in job_ids:
+	def batchDelete(self, *args):
+		for job in args:
 			self.deleteJob(job)
 
 	def deleteAllJobs(self):
