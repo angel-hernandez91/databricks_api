@@ -14,7 +14,7 @@ class RunTypeNotSupportedException(Exception):
 
 class Jobs(Databricks.Databricks):
 	def __init__(self, url):
-		super().__init__(self, url)
+		super().__init__()
 		self._url = url
 		self._api_type = 'jobs'
 
