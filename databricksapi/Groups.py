@@ -6,7 +6,7 @@ class ReturnTypeNotSupportedException: pass
 
 class Groups(Databricks.Databricks):
 	def __init__(self, url):
-		super().__init__(self)
+		super().__init__()
 		self._api_type = 'groups'
 		self._url = url
 
