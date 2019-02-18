@@ -187,14 +187,14 @@ class Jobs(Databricks.Databricks):
 		return self._post(url, payload)
 
 	def runsGet(self, run_id):
-		endpiont = 'runs/submit'
+		endpiont = 'runs/get'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
 			'run_id': run_id
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def runsExport(self, run_id, views_to_export):
 		endpoint = 'runs/export'
