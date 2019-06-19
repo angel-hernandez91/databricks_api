@@ -27,7 +27,7 @@ class Workspace(Databricks.Databricks):
 			'direct_download': direct_download
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 
 	def getWorkspaceStatus(self, path):
