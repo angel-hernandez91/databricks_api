@@ -84,7 +84,7 @@ The scope name must consist of alphanumeric characters, dashes, underscores, and
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 initial_manage_princial = 'users'
@@ -96,7 +96,7 @@ db_api.createSecretScope(scope, initial_manage_princial)
 Delete a secret scope.
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 db_api.deleteSecretScope(scope)
@@ -107,7 +107,7 @@ List all secret scopes in the workspace
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 db_api.listSecretScopes()
 ```
@@ -119,7 +119,7 @@ The `value_type` parameter can either be set to `string` or `bytes` depending on
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 #set parameters
 value = 'BeepBoop'
@@ -135,7 +135,7 @@ Deletes the secret stored in this secret scope. You must have WRITE or MANAGE pe
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 key = 'uniqueScopekey'
@@ -148,7 +148,7 @@ Lists the secret keys that are stored at this scope. This is a metadata-only ope
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 
@@ -160,7 +160,7 @@ Creates or overwrites the ACL associated with the given principal (user or group
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 prinicpal = 'users'
@@ -174,7 +174,7 @@ Deletes the given ACL on the given scope.
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 prinicpal = 'users'
@@ -187,7 +187,7 @@ Describes the details about the given ACL, such as the group and permission.
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 prinicpal = 'users'
@@ -200,7 +200,7 @@ Lists the ACLs set on the given scope.
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Secrets(url)
 
 scope = 'SomeSecretScope'
 prinicpal = 'users'
@@ -236,7 +236,7 @@ The `worker_type` can be either `workers` or `autoscale`. If a `autoscale` is se
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 worker = 25
 worker_type = 'workers'
@@ -256,7 +256,7 @@ The `worker_type` can be either `workers` or `autoscale`. If a `autoscale` is se
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 worker = 35
 worker_type = 'workers'
@@ -273,7 +273,7 @@ Starts a terminated Spark cluster given its ID.
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 db_api.startCluster(cluster_id)
@@ -284,7 +284,7 @@ Restarts a Spark cluster given its id. If the cluster is not in a RUNNING state,
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 db_api.restartCluster(cluster_id)
@@ -297,7 +297,7 @@ The parameter `worker_type` can be one of `workers` or `autoscale`.
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 workers = 30
@@ -310,7 +310,7 @@ Terminates a Spark cluster given its id. The cluster is removed asynchronously. 
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
@@ -324,7 +324,7 @@ You cannot perform any action on a permanently deleted cluster and a permanently
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
@@ -336,7 +336,7 @@ Returns information about all pinned clusters, currently active clusters, up to 
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
@@ -349,7 +349,7 @@ Pinning a cluster ensures that the cluster is always returned by the List API. P
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
@@ -361,7 +361,7 @@ Unpinning a cluster will allow the cluster to eventually be removed from the lis
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
@@ -373,7 +373,7 @@ Retrieves the information for a cluster given its identifier. Clusters can be de
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 db_api.listClusters()
 ```
@@ -383,7 +383,7 @@ Returns a list of supported Spark node types. These node types can be used to la
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 db_api.listNodeTypes()
 ```
@@ -393,7 +393,7 @@ Returns a list of availability zones where clusters can be created in (ex: us-we
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 db_api.listZones()
 ```
@@ -403,7 +403,7 @@ Returns the list of available Spark versions. These versions can be used to laun
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 db_api.getSparkVersions()
 ```
@@ -415,7 +415,7 @@ Retrieves a list of events about the activity of a cluster. This API is paginate
 
 ```python
 url = 'https://url.for.databricks.net'
-db_api = Token(url)
+db_api = Clusters(url)
 
 cluster_id = '1202-211320-brick1'
 
