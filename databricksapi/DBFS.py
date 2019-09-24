@@ -1,8 +1,8 @@
 from . import Databricks
 
 class DBFS(Databricks.Databricks):
-	def __init__(self, url):
-		super().__init__()
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._api_type = 'dbfs'
 		self._url = url
 
@@ -55,7 +55,7 @@ class DBFS(Databricks.Databricks):
 		payload = {
 			'path': path
 		}
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def listFiles(self, path):
 		endpoint = 'list'
@@ -65,7 +65,7 @@ class DBFS(Databricks.Databricks):
 			'path': path
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def makeDirs(self, path):
 		endpoint = 'mkdirs'
@@ -113,7 +113,7 @@ class DBFS(Databricks.Databricks):
 			'length': length
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 
 

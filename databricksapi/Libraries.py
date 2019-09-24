@@ -1,8 +1,8 @@
 from . import Databricks
 
 class Libraries(Databricks.Databricks):
-	def __init__(self, url):
-		super().__init__()
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'libraries'
 
@@ -10,11 +10,7 @@ class Libraries(Databricks.Databricks):
 		endpoint = 'all-cluster-statuses'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'statuses': status
-		}
-
-		return self._post(url, payload)
+		return self._get(url)
 
 	def clusterStatus(self, cluster_id):
 		endpoint = 'cluster-status'

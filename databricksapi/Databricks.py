@@ -2,11 +2,24 @@ import json
 import requests
 import os
 
+class TokenNotFoundInEnvironmentException(Exception): pass
+
 class Databricks:
-	def __init__(self):
-		self._token = 'Bearer {}'.format(os.environ['DATABRICKS_TOKEN'])
+	def __init__(self, token=None):
+		self._token = self._set_token(token)
 		self._headers = {'content_type': 'application/json', 'authorization': self._token}
 		self._api_suffix = '/api/2.0/'
+
+	def _set_token(self, token):
+		if token is None:
+			try:
+				out = 'Bearer {}'.format(os.environ['DATABRICKS_TOKEN'])
+			except KeyError:
+				raise TokenNotFoundInEnvironmentException("The token could not be found using os.environ. Add the token to the environment, or pass one in explicitly.")
+		else:
+			out = 'Bearer {}'.format(token)
+		return out
+			
 
 	def _url_sanitize(self, url):
 		if url[-1] == '/':

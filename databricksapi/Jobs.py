@@ -13,12 +13,12 @@ class RunTypeNotSupportedException(Exception):
 		Exception.__init__(self, "The run type '{}' is not supported. Use either 'active' or 'completed'.".format(run_type))
 
 class Jobs(Databricks.Databricks):
-	def __init__(self, url):
-		super().__init__()
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'jobs'
 
-	def createJob(cluster, cluster_type, task, task_type, name, 
+	def createJob(self, cluster, cluster_type, task, task_type, name, 
 				  libraries=None, email_notications=None, timeout_seconds=None,
 				  max_retries=None, min_retry_interval_millis=None, retry_on_timeout=None,
 				  schedule=None, max_concurrent_runs=None):
@@ -68,8 +68,8 @@ class Jobs(Databricks.Databricks):
 	def listJobs(self):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
-		payload = None
-		return self._post(url, payload)
+		
+		return self._get(url)
 
 	def deleteJob(self, job_id):
 		endpoint = 'delete'
@@ -98,7 +98,7 @@ class Jobs(Databricks.Databricks):
 			'job_id': job_id
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def resetJob(self, job_id, new_settings):
 		endpoint = 'reset'
@@ -184,10 +184,10 @@ class Jobs(Databricks.Databricks):
 		else:
 			raise RunTypeNotSupportedException(run_type)
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def runsGet(self, run_id):
-		endpiont = 'runs/get'
+		endpoint = 'runs/get'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
@@ -205,7 +205,7 @@ class Jobs(Databricks.Databricks):
 			'views_to_export': views_to_export
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def runsCancel(self, run_id):
 		endpoint = 'runs/cancel'
@@ -225,13 +225,13 @@ class Jobs(Databricks.Databricks):
 			'run_id': run_id
 		}
 
-		return self._post(url, payload)
+		return self._get(url, payload)
 
 	def runsDelete(self, run_id):
 		endpoint = 'runs/delete'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payloads = {
+		payload = {
 			'run_id': run_id
 		}
 

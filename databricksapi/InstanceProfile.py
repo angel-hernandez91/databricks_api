@@ -1,8 +1,8 @@
 from . import Databricks
 
 class InstanceProfile(Databricks.Databricks):
-	def __init__(self, url):
-		super().__init__()
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'instance-profiles'
 
@@ -23,7 +23,7 @@ class InstanceProfile(Databricks.Databricks):
 		endpoint = 'list'
 		url = self._set_url(self._url, self._api_type, endpoint)
 		
-		return self._post(url)
+		return self._get(url)
 
 	def removeProfile(self):
 		endpoint = 'remove'

@@ -1,8 +1,10 @@
 from . import Databricks
+import requests
+import json
 
-class SCIM:
-	def __init__(self, url):
-		super().__init__()
+class SCIM(Databricks.Databricks):
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'preview/scim/v2'
 		self._write_headers = {'content-type': 'application/scim+json', 'authorization': self._token}
@@ -20,24 +22,23 @@ class SCIM:
 		else:
 			return requests.get(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
 
-	def _scim_patch(self, url, payload):
+	def _scim_patch(self, url, payload=None):
 		if payload is None:
 			return requests.patch(url, headers=self._write_headers, accept=self._accept)
 		else:
 			return requests.patch(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
 
-	def _scim_put(self, url, payload):
+	def _scim_put(self, url, payload=None):
 		if payload is None:
 			return requests.put(url, headers=self._write_headers, accept=self._accept)
 		else:
 			return requests.put(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
 
-	def _scim_delete(self, url, payload):
+	def _scim_delete(self, url, payload=None):
 		if payload is None:
 			return requests.delete(url, headers=self._write_headers, accept=self._accept)
 		else:
 			return requests.delete(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
-
 
 	def getUsers(self, filter_string=None):
 		endpoint = 'Users'
@@ -70,7 +71,7 @@ class SCIM:
 
 		return self._scim_post(url, payload)
 
-	def updateUserById(self, user_id, schemas, operations):
+	def updateUserByIdPatch(self, user_id, schemas, operations):
 		endpoint = 'Users/{}'.format(user_id)
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -81,7 +82,7 @@ class SCIM:
 
 		return self._scim_patch(url, payload)
 
-	def updateUserById(self, user_id, schemas, userName, entitlements, roles, groups):
+	def updateUserByIdPut(self, user_id, schemas, userName, entitlements, roles, groups):
 		endpoint = 'Users/{}'.format(user_id)
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -117,7 +118,7 @@ class SCIM:
 
 		return self._scim_get(url)
 
-	def createGroup(self, schemas, displayName, members):
+	def createGroup(self, group_id, schemas, displayName, members):
 		endpoint = 'Groups/{}'.format(group_id)
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -145,5 +146,5 @@ class SCIM:
 		endpoint = 'Groups/{}'.format(group_id)
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		return self._scim_delete(url, payload)
+		return self._scim_delete(url)
 

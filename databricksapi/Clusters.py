@@ -5,8 +5,8 @@ class WorkerTypeNotSupportedException(Exception):
 		Exception.__init__(self, "The worker type '{}' is not supported. Use either 'workers' or 'autoscale'.".format(worker_type))
 
 class Clusters(Databricks.Databricks):
-	def __init__(self, url):
-		super().__init__()
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'clusters'
 

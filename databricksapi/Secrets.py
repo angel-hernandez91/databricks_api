@@ -4,9 +4,9 @@ class ValueTypeNotSupportedException(Exception):
 	def __init__(self, value_type):
 		Exception.__init__(self, "The value type '{}' is not supported. Use either 'string' or 'bytes'.".format(value_type))
 
-class Secrets:
-	def __init__(self, url):
-		super().__init__()
+class Secrets(Databricks.Databricks):
+	def __init__(self, url, token=None):
+		super().__init__(token)
 		self._url = url
 		self._api_type = 'secrets'
 
@@ -88,11 +88,11 @@ class Secrets:
 			'permission': permission	
 		}
 
-		return self._post(self._url, self._api_type, endpoint)
+		return self._post(url, payload)
 
 	def deleteSecretACL(self, scope, principal):
 		endpoint = 'acls/delete'
-		url = self._post_url(self._url, self._api_type, endpoint)
+		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
 			'scope': scope,
@@ -104,7 +104,7 @@ class Secrets:
 
 	def getSecretACL(self, scope, principal):
 		endpoint = 'acls/get'
-		url = self._post_url(self._url, self._api_type, endpoint)
+		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
 			'scope': scope,
@@ -115,7 +115,7 @@ class Secrets:
 
 	def listSecretACL(self, scope):
 		endpoint = 'acls/list'
-		url = self._post_url(self._url, self._api_type, endpoint)
+		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
 			'scope': scope
