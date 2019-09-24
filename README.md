@@ -1,6 +1,17 @@
 # Databricks API Documentation
 *This package is a Python Implementation of the [Databricks API](https://docs.databricks.com/api/latest/index.html) for structured and programmatic use. This Python implementation requires that your Databricks API Token be saved as an environment variable in your system:* `export DATABRICKS_TOKEN=MY_DATABRICKS_TOKEN` in OSX / Linux. Or in Windows by searching for System Environment Variables in the Start Menu and adding it in the editor. For details see this [guide](https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10).
 
+## UPDATE
+*Tokens can now be passed when a particular class is instantiated. E.g.:*
+
+```python
+from databricksapi import Workspace
+url = 'https://my-databricks-instance.com'
+token = 'dapiXXXXXXXXXXXXX'
+ws = Workspace(url, token)
+
+```
+
 ## Installation
 You can either use `pip install databricksapi` to install it globally, or you can clone the repository. Please note that only compatability with Python 3.7+ is guaranteed.
 
