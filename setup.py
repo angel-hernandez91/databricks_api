@@ -1,11 +1,11 @@
 import setuptools
 
-with open('README.md', 'r') as rm:
+with open('README.md', 'r', encoding='utf-8') as rm:
 	long_description = rm.read()
 
 setuptools.setup(
 	name='databricksapi',
-	version='1.1.2',
+	version='1.1.3',
 	description='Python Databricks API wrapper using requests module',
 	long_description=long_description,
 	long_description_content_type='text/markdown',
