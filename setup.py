@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as rm:
 
 setuptools.setup(
 	name='databricksapi',
-	version='1.1.3',
+	version='1.1.4',
 	description='Python Databricks API wrapper using requests module',
 	long_description=long_description,
 	long_description_content_type='text/markdown',

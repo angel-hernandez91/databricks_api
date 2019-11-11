@@ -67,7 +67,7 @@ class Workspace(Databricks.Databricks):
 
 	def mkdirsWorkspace(self, path):
 		endpoint = 'mkdirs'
-		url = self._set_url(self._set_url, self._api_type, endpoint)
+		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
 			'path': path
