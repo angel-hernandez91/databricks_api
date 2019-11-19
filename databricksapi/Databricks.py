@@ -66,8 +66,13 @@ class Databricks:
 
 
 
-	def _get(self, url, payload=None):
+	def _get(self, url, payload=None, content=False):
 		if payload is None:
-			return requests.get(url, headers=self._headers).json()
+			r = requests.get(url, headers=self._headers)
 		else:
-			return requests.get(url, data=json.dumps(payload), headers=self._headers).json()
+			r = requests.get(url, data=json.dumps(payload), headers=self._headers)
+		
+		if content is True:
+			return r.content
+		else:
+			return r.json()

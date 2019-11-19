@@ -17,7 +17,7 @@ class Workspace(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def exportWorkspace(self, path, export_format, direct_download):
+	def exportWorkspace(self, path, export_format, direct_download, content=True):
 		endpoint = 'export'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -27,7 +27,7 @@ class Workspace(Databricks.Databricks):
 			'direct_download': direct_download
 		}
 
-		return self._get(url, payload)
+		return self._get(url, payload, content)
 
 
 	def getWorkspaceStatus(self, path):
