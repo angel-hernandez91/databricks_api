@@ -19,9 +19,9 @@ class Jobs(Databricks.Databricks):
 		self._api_type = 'jobs'
 
 	def createJob(self, cluster, cluster_type, task, task_type, name, 
-				  libraries=None, email_notications=None, timeout_seconds=None,
-				  max_retries=None, min_retry_interval_millis=None, retry_on_timeout=None,
-				  schedule=None, max_concurrent_runs=None):
+					libraries=None, email_notications=None, timeout_seconds=None,
+					max_retries=None, min_retry_interval_millis=None, retry_on_timeout=None,
+					schedule=None, max_concurrent_runs=None):
 		endpoint = 'create'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
@@ -94,6 +94,7 @@ class Jobs(Databricks.Databricks):
 	def getJob(self, job_id):
 		endpoint = 'get'
 		url = self._set_url(self._url, self._api_type, endpoint)
+
 		payload = {
 			'job_id': job_id
 		}
@@ -167,20 +168,27 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def runsList(self, run, run_type, job_id, offset, limit):
+	def runsList(self, run_type, job_id=None, offset=None, limit=None):
 		endpoint = 'runs/list'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'job_id': job_id,
-			'offset': offset,
-			'limit': limit
-		}
+		payload = {}
+
+		if job_id is not None:
+			payload['job_id'] = job_id
+
+		if offset is not None:
+			payload['offset'] = offset
+
+		if limit is not None:
+			payload['limit'] = limit
 
 		if run_type.lower() == 'active':
-			payload['active_only'] = run
+			payload['active_only'] = True
 		elif run_type.lower() == 'completed':
-			payload['completed_only'] = run
+			payload['completed_only'] = True
+		elif run_type.lower() == 'all':
+			pass
 		else:
 			raise RunTypeNotSupportedException(run_type)
 
