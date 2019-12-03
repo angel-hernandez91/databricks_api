@@ -1,6 +1,7 @@
 import json
 import requests
 import os
+import simplejson
 
 class TokenNotFoundInEnvironmentException(Exception): pass
 
@@ -62,7 +63,12 @@ class Databricks:
 
 				return requests.post(url, data=payload, headers=headers, files=files).json()
 			else:
-				return requests.post(url, data=json.dumps(payload), headers=self._headers).json()
+				try:
+					r = requests.post(url, data=json.dumps(payload), headers=self._headers)
+					return r.json()
+				except simplejson.scanner.JSONDecodeError:
+					print(r.content)
+
 
 
 
