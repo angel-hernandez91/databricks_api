@@ -1,7 +1,6 @@
 import json
 import requests
 import os
-import simplejson
 
 class TokenNotFoundInEnvironmentException(Exception): pass
 
@@ -54,23 +53,19 @@ class Databricks:
 		headers = {'content_type': 'multipart/form-data', 'authorization': self._token}
 		if payload is None:
 			if files is None:
-				return requests.post(url, headers=self._headers).json()
+				r = requests.post(url, headers=self._headers)
 			else:
-				
-				return requests.post(url, headers=headers, files=files).json()
+				r = requests.post(url, headers=headers, files=files)
 		else:
 			if files is not None:
-
-				return requests.post(url, data=payload, headers=headers, files=files).json()
+				r = requests.post(url, data=payload, headers=headers, files=files)
 			else:
-				try:
-					r = requests.post(url, data=json.dumps(payload), headers=self._headers)
-					return r.json()
-				except simplejson.scanner.JSONDecodeError:
-					print(r.content)
-
-
-
+				r = requests.post(url, data=json.dumps(payload), headers=self._headers)
+		
+		try:
+			return r.json()
+		except json.JSONDecodeError:
+			print(r.content)
 
 	def _get(self, url, payload=None, content=False):
 		if payload is None:
@@ -81,4 +76,7 @@ class Databricks:
 		if content is True:
 			return r.content
 		else:
-			return r.json()
+			try:
+			 return r.json()
+			except json.JSONDecodeError:
+				print(r.content)
