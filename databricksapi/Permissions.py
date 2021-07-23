@@ -190,7 +190,7 @@ class Permissions(Databricks.Databricks):
 		return self._get(url)
 	
 	#Get cluster permissions
-	def getClusterPermissions 
+	def getClusterPermissions  (self, cluster_id): 
 		endpoint = '/permissions/clusters/'+cluster_id
 		url = self._set_url(self._url, self._api_type, endpoint)
 
