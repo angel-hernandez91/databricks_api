@@ -184,21 +184,21 @@ class Permissions(Databricks.Databricks):
 	
 	#Get cluster permission levels
 	def getClusterPermissionLevels (self, cluster_id): 
-		endpoint = '/permissions/clusters/'cluster_id'/permissionLevels'
+		endpoint = '/permissions/clusters/'+cluster_id+'/permissionLevels'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		return self._get(url)
 	
 	#Get cluster permissions
 	def getClusterPermissions 
-		endpoint = '/permissions/clusters/'cluster_id
+		endpoint = '/permissions/clusters/'+cluster_id
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		return self._get(url)
 	
 	#Update cluster permissions for a specific entity	
 	def updateClusterPermissions (self, cluster_id, name, name_type, permission_level): 
-		endpoint = '/permissions/clusters/'cluster_id
+		endpoint = '/permissions/clusters/'+cluster_id
 		url = self._set_url(self._url, self._api_type, endpoint)
 		
 		if name_type.lower() == 'user':
@@ -228,7 +228,7 @@ class Permissions(Databricks.Databricks):
 	
 	#Replace cluster permissions	
 	def replaceClusterPermissions (self, cluster_id, name, name_type, permission_level):
-		endpoint = '/permissions/clusters/'cluster_id
+		endpoint = '/permissions/clusters/'+cluster_id
 		url = self._set_url(self._url, self._api_type, endpoint)
 		
 		if name_type.lower() == 'user':
