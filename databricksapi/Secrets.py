@@ -37,7 +37,7 @@ class Secrets(Databricks.Databricks):
 
 		return self._get(url)
 
-	def putSeceret(self, value, value_type, scope, key):
+	def putSecret(self, value, value_type, scope, key):
 		endpoint = 'put'
 		url = self._set_url(self._url, self._api_type, endpoint)
 

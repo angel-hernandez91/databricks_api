@@ -80,3 +80,37 @@ class Databricks:
 			 return r.json()
 			except json.JSONDecodeError:
 				print(r.content)
+				
+	def _patch(self, url, payload=None, files=None):
+		headers = {'content_type': 'multipart/form-data', 'authorization': self._token}
+		if payload is None:
+			if files is None:
+				r = requests.patch(url, headers=self._headers)
+			else:
+				r = requests.patch(url, headers=headers, files=files)
+		else:
+			if files is not None:
+				r = requests.patch(url, data=payload, headers=headers, files=files)
+			else:
+				r = requests.patch(url, data=json.dumps(payload), headers=self._headers)
+		try:
+			return r.json()
+		except json.JSONDecodeError:
+			print(r.content)
+				
+	def _put(self, url, payload=None, files=None):
+		headers = {'content_type': 'multipart/form-data', 'authorization': self._token}
+		if payload is None:
+			if files is None:
+				r = requests.put(url, headers=self._headers)
+			else:
+				r = requests.put(url, headers=headers, files=files)
+		else:
+			if files is not None:
+				r = requests.put(url, data=payload, headers=headers, files=files)
+			else:
+				r = requests.put(url, data=json.dumps(payload), headers=self._headers)
+		try:
+			return r.json()
+		except json.JSONDecodeError:
+			print(r.content)

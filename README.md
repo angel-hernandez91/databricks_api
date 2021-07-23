@@ -26,6 +26,7 @@ You can either use `pip install databricksapi` to install it globally, or you ca
 * Instance Profiles
 * Libraries
 * Workspace
+* Permissions
 
 ## Imports
 The modules above can be imported as follows
@@ -80,7 +81,7 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 1. createSecretScope(*scope*, *initial_manage_principal*)
 2. deleteSecretScope(*scope*)
 3. listSecretScopes()
-4. putSeceret(*value*, *value_type*, *scope*, *key*)
+4. putSecret(*value*, *value_type*, *scope*, *key*)
 5. deleteSecret(*scope*, *key*)
 6. listSecrets(*scope*)
 7. putSecretACL(*scope*, *principal*, *permission*)
@@ -523,7 +524,7 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 3. installLibrary(*cluster_id*, *libraries*)
 4. uninstallLibrary(*cluster_id*, *libraries*)
 
-## Worspace API
+## Workspace API
 1. deleteWorkspace(*path*, *recursive*)
 2. exportWorkspace(*path*, *export_format*, *direct_download*)
 3. getWorkspaceStatus(*path*)
@@ -531,4 +532,35 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 5. listWorkspace(*path*)
 6. mkdirsWorkspace(*path*)
 
+## Permissions API
+The Permissions API allows you to view and manage permissions via the API. The maximum allowed size of a request to the Permissions API is 10MB.
 
+###Methods
+1. getTokenPermissionLevels()
+2. getTokenPermissions()
+3. updateTokenPermissions(*name*, *name_type*, *permission_level*)
+4. replaceTokenPermissions(*name*, *name_type*, *permission_level*)
+5. getPasswordsPermissionLevels()
+6. getPasswordsPermissions()
+7. updatePasswordsPermissions(*name*, *name_type*)
+8. replacePasswordsPermissions(*name*, *name_type*)
+9. getClusterPermissionLevels()
+10. getClusterPermissions()
+11. updateClusterPermissions(*cluster_id*, *name*, *name_type*, *permission_level*)
+12. replaceClusterPermissions(*cluster_id*, *name*, *name_type*, *permission_level*)
+
+#### updateTokenPermissions(*name*, *name_type*, *permission_level*)
+The `name_type` parameter must be one of `user` or `group`.
+For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+
+#### replaceTokenPermissions(*name*, *name_type*, *permission_level*)
+The `name_type` parameter must be one of `user` or `group`.
+For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+
+#### updateClusterPermissions(*name*, *name_type*, *permission_level*)
+The `name_type` parameter must be one of `user` or `group`.
+For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+
+#### replaceClusterPermissions(*name*, *name_type*, *permission_level*)
+The `name_type` parameter must be one of `user` or `group`.
+For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
