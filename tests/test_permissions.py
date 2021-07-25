@@ -1,7 +1,7 @@
 from databricksapi import Permissions
 
 url = 'https://my.cloud.databricks.com'
-token = 'dapi88888888888888888888888888'
+token = 'dapi8888888888888888888888888'
 
 pe = Permissions2.Permissions(url, token)
 
