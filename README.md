@@ -26,6 +26,7 @@ You can either use `pip install databricksapi` to install it globally, or you ca
 * Instance Profiles
 * Libraries
 * Workspace
+* Permissions
 
 ## Imports
 The modules above can be imported as follows
@@ -80,7 +81,7 @@ The Secrets API allows you to manage secrets, secret scopes, and access permissi
 1. createSecretScope(*scope*, *initial_manage_principal*)
 2. deleteSecretScope(*scope*)
 3. listSecretScopes()
-4. putSeceret(*value*, *value_type*, *scope*, *key*)
+4. putSecret(*value*, *value_type*, *scope*, *key*)
 5. deleteSecret(*scope*, *key*)
 6. listSecrets(*scope*)
 7. putSecretACL(*scope*, *principal*, *permission*)
@@ -523,7 +524,7 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 3. installLibrary(*cluster_id*, *libraries*)
 4. uninstallLibrary(*cluster_id*, *libraries*)
 
-## Worspace API
+## Workspace API
 1. deleteWorkspace(*path*, *recursive*)
 2. exportWorkspace(*path*, *export_format*, *direct_download*)
 3. getWorkspaceStatus(*path*)
@@ -531,4 +532,38 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 5. listWorkspace(*path*)
 6. mkdirsWorkspace(*path*)
 
+## Permissions API
+The Permissions API allows you to view and manage permissions via the API. The maximum allowed size of a request to the Permissions API is 10MB.
 
+###Methods
+1. getPermissionLevels(*permission_object*, *permission_object_id = 0*)
+2. getPermissions(*permission_object*, *permission_object_id = 0*)
+3. updatePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*))
+4. revokePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*)
+
+Databricks Permissions Rest API does not have mothods to revoke specific permissions. That's why revokePermissions method of this library is implemeted as a sequential call of Get and Replace methods of Rest API. If updatePermissins is called simultaneously and executed in between Get and Replace, the results of updatePermissions can be lost. 
+
+#### Parameter "name"
+Defines the name of a user or a group which permissions are you working with.
+
+#### Parameter "name_type"
+Defines if *name* parameter is a user or a group. Case non-sensitive. Possible values:
+	user
+	group
+
+#### Parameter "permission_level"
+Defines a permission level that you are adding or revoking. See Databricks Permissions Rest API documentation or use getPermissionLevels method for specific object type.
+
+#### Parameter "permission_object"
+Defines the object type. Possible values:
+	Tokens
+	Passwords
+	Cluster
+	Pool
+	Job
+	Notebook
+	Directory
+	RegisteredModel
+
+#### Parameter "permission_object_id"
+Defines the identifier of specific object (optional). Can be number or string. Not applicable for 'Tokens' and 'Passwords' object types.
