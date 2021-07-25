@@ -74,6 +74,7 @@ class Permissions(Databricks.Databricks):
         if (name_type.lower() == 'user' or name_type.lower() == 'group'):
 
             permission_object_settings = papi.get(permission_object, 'none')
+			
             if permission_object_settings != 'none':
 
                 if permission_object_settings['id_needed'] == 0:
@@ -82,12 +83,15 @@ class Permissions(Databricks.Databricks):
                     url = self._set_url(self._url, self._api_type,permission_object_settings['endpoint']+'/'+str(permission_object_id))
 
                 acl = self.getPermissions(permission_object,permission_object_id)
-                new_acl = []
+                
+				new_acl = []
+				
                 for identity in acl.get('access_control_list','none'):
                     if identity.get('group_name','none') != 'none':
                         for permission in identity.get('all_permissions'):
                             if not( name_type == 'group' and identity.get('group_name','none') == name and permission_level == permission.get('permission_level','none') ):
                                 new_acl.append( {'group_name': identity.get('group_name','none'), 'permission_level': permission.get('permission_level','none')} )
+								
                     elif identity.get('user_name', 'none') != 'none':
                         for permission in identity.get('all_permissions'):
                             if not (name_type == 'user' and identity.get('user_name','none') == name and permission_level == permission.get('permission_level', 'none')):
