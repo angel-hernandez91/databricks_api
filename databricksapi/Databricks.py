@@ -19,7 +19,7 @@ class Databricks:
 		else:
 			out = 'Bearer {}'.format(token)
 		return out
-			
+
 
 	def _url_sanitize(self, url):
 		if url[-1] == '/':
