@@ -4,256 +4,99 @@ class NameTypeNotSupportedException: pass
 
 class ReturnTypeNotSupportedException: pass
 
+papi = {
+    'Tokens': {'endpoint': 'authorization/tokens', 'id_needed': 0},
+    'Passwords': {'endpoint': 'authorization/passwords', 'id_needed': 0},
+    'Cluster': {'endpoint': 'clusters', 'id_needed': 1},
+    'Pool': {'endpoint': 'instance-pools', 'id_needed': 1},
+    'Job': {'endpoint': 'jobs', 'id_needed': 1},
+    'Notebook': {'endpoint': 'notebooks', 'id_needed': 1},
+    'Directory': {'endpoint': 'directories', 'id_needed': 1},
+    'RegisteredModel': {'endpoint': 'registered_models', 'id_needed': 1},
+}
+
+
 class Permissions(Databricks.Databricks):
-	def __init__(self, url, token=None):
-		super().__init__(token)
-		self._api_type = 'permissions'
-		self._url = url
-		
-		
-		
-	# Token Permissions
-	
-	#Get token permission levels
-	def getTokenPermissionLevels (self): 
-		endpoint = 'authorization/tokens/permissionLevels'
-		url = self._set_url(self._url, self._api_type, endpoint)
+    def __init__(self, url, token=None):
+        super().__init__(token)
+        self._api_type = 'permissions'
+        self._url = url
 
-		return self._get(url)
-		
-	#Get all token permissions for the workspace	
-	def getTokenPermissions (self): 
-		endpoint = 'authorization/tokens'
-		url = self._set_url(self._url, self._api_type, endpoint)
+    # Get permission levels
+    def getPermissionLevels(self, permission_object, permission_object_id = 0):
+        permission_object_settings = papi.get(permission_object, 'none')
+        if permission_object_settings == 'none':
+            raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            if permission_object_settings['id_needed'] == 0:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+"/permissionLevels")
+            else:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+'/'+str(permission_object_id)+"/permissionLevels")
 
-		return self._get(url)
-		
-	#Update token permissions for a specific entity
-	def updateTokenPermissions (self, name, name_type, permission_level): 
-		endpoint = 'authorization/tokens'
-		url = self._set_url(self._url, self._api_type, endpoint)
+            return self._get(url)
 
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"group_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+    # Get all permissions for the workspace
+    def getPermissions(self, permission_object, permission_object_id = 0):
+        permission_object_settings = papi.get(permission_object, 'none')
+        if permission_object_settings == 'none':
+            raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            if permission_object_settings['id_needed'] == 0:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint'])
+            else:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+'/'+str(permission_object_id))
 
-		return self._patch(url, payload)
-		
-	# Replace all token permissions for workspace, revoking tokens for users that no longer have permissions	
-	def replaceTokenPermissions  (self, name, name_type, permission_level): 
-		endpoint = 'authorization/tokens'
-		url = self._set_url(self._url, self._api_type, endpoint)
+            return self._get(url)
 
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"group_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+    # Update permissions for a specific entity
+    def updatePermissions(self, name, name_type, permission_level, permission_object, permission_object_id = 0):
+        permission_object_settings = papi.get(permission_object, 'none')
+        if permission_object_settings == 'none':
+            raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            if permission_object_settings['id_needed'] == 0:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint'])
+            else:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+'/'+str(permission_object_id))
 
-		return self._put(url, payload)
-		
-		
-		
-	# Passwords Permissions
-	
-	#Get Passwords permission levels
-	def getPasswordsPermissionLevels (self): 
-		endpoint = 'authorization/passwords/permissionLevels'
-		url = self._set_url(self._url, self._api_type, endpoint)
+            if name_type.lower() == 'user':
+                payload = {"access_control_list": [{"user_name": name, "permission_level": permission_level}]}
+            elif name_type.lower() == 'group':
+                payload = {"access_control_list": [{"group_name": name, "permission_level": permission_level}]}
+            else:
+                raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
 
-		return self._get(url)
-		
-	#Get all Passwords permissions for the workspace	
-	def getPasswordsPermissions (self): 
-		endpoint = 'authorization/passwords'
-		url = self._set_url(self._url, self._api_type, endpoint)
+            return self._patch(url, payload)
 
-		return self._get(url)
-		
-	#Update Passwords permissions for a specific entity
-	def updatePasswordsPermissions (self, name, name_type): 
-		endpoint = 'authorization/passwords'
-		url = self._set_url(self._url, self._api_type, endpoint)
+    # Revoke specified permission for specified identity for specified object
+    def revokePermissions(self, name, name_type, permission_level, permission_object, permission_object_id = 0):
 
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": {
-										"permission_level": "CAN_USE",
-										"description": "Permission to use this object. Applies to tokens and passwords."
-										}
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": {
-										"permission_level": "CAN_USE",
-										"description": "Permission to use this object. Applies to tokens and passwords."
-										}
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+        if (name_type.lower() == 'user' or name_type.lower() == 'group'):
 
-		return self._patch(url, payload)
-		
-	# Replace all Passwords permissions for workspace, revoking Passwords for users that no longer have permissions	
-	def replacePasswordsPermissions  (self, name, name_type): 
-		endpoint = 'authorization/passwords'
-		url = self._set_url(self._url, self._api_type, endpoint)
+            permission_object_settings = papi.get(permission_object, 'none')
+            if permission_object_settings != 'none':
 
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": {
-										"permission_level": "CAN_USE",
-										"description": "Permission to use this object. Applies to tokens and passwords."
-										}
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": {
-										"permission_level": "CAN_USE",
-										"description": "Permission to use this object. Applies to tokens and passwords."
-										}
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+                if permission_object_settings['id_needed'] == 0:
+                    url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint'])
+                else:
+                    url = self._set_url(self._url, self._api_type,permission_object_settings['endpoint']+'/'+str(permission_object_id))
 
-		return self._put(url, payload)
-		
-		
-		
-	# Cluster Permissions
-	
-	#Get cluster permission levels
-	def getClusterPermissionLevels (self, cluster_id): 
-		endpoint = 'clusters/'+cluster_id+'/permissionLevels'
-		url = self._set_url(self._url, self._api_type, endpoint)
+                acl = self.getPermissions(permission_object,permission_object_id)
+                new_acl = []
+                for identity in acl.get('access_control_list','none'):
+                    if identity.get('group_name','none') != 'none':
+                        for permission in identity.get('all_permissions'):
+                            if not( name_type == 'group' and identity.get('group_name','none') == name and permission_level == permission.get('permission_level','none') ):
+                                new_acl.append( {'group_name': identity.get('group_name','none'), 'permission_level': permission.get('permission_level','none')} )
+                    elif identity.get('user_name', 'none') != 'none':
+                        for permission in identity.get('all_permissions'):
+                            if not (name_type == 'user' and identity.get('user_name','none') == name and permission_level == permission.get('permission_level', 'none')):
+                                new_acl.append({'user_name': identity.get('user_name', 'none'),'permission_level': permission.get('permission_level', 'none')})
 
-		return self._get(url)
-	
-	#Get cluster permissions
-	def getClusterPermissions  (self, cluster_id): 
-		endpoint = 'clusters/'+cluster_id
-		url = self._set_url(self._url, self._api_type, endpoint)
+                payload = { "access_control_list": new_acl }
 
-		return self._get(url)
-	
-	#Update cluster permissions for a specific entity	
-	def updateClusterPermissions (self, cluster_id, name, name_type, permission_level): 
-		endpoint = 'clusters/'+cluster_id
-		url = self._set_url(self._url, self._api_type, endpoint)
-		
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"group_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
-
-		return self._patch(url, payload)
-	
-	#Replace cluster permissions	
-	def replaceClusterPermissions (self, cluster_id, name, name_type, permission_level):
-		endpoint = 'clusters/'+cluster_id
-		url = self._set_url(self._url, self._api_type, endpoint)
-		
-		if name_type.lower() == 'user':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"user_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		elif name_type.lower() == 'group':
-			payload = {
-						"access_control_list": 
-							[
-								{
-									"group_name": name,
-									"permission_level": permission_level
-								}
-							]
-						}
-		else:
-			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
-
-		return self._put(url, payload)
-		
-	
+                return self._put(url, payload)
+            else:
+                raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))

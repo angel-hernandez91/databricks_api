@@ -536,31 +536,34 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 The Permissions API allows you to view and manage permissions via the API. The maximum allowed size of a request to the Permissions API is 10MB.
 
 ###Methods
-1. getTokenPermissionLevels()
-2. getTokenPermissions()
-3. updateTokenPermissions(*name*, *name_type*, *permission_level*)
-4. replaceTokenPermissions(*name*, *name_type*, *permission_level*)
-5. getPasswordsPermissionLevels()
-6. getPasswordsPermissions()
-7. updatePasswordsPermissions(*name*, *name_type*)
-8. replacePasswordsPermissions(*name*, *name_type*)
-9. getClusterPermissionLevels()
-10. getClusterPermissions()
-11. updateClusterPermissions(*cluster_id*, *name*, *name_type*, *permission_level*)
-12. replaceClusterPermissions(*cluster_id*, *name*, *name_type*, *permission_level*)
+1. getPermissionLevels(*permission_object*, *permission_object_id = 0*)
+2. getPermissions(*permission_object*, *permission_object_id = 0*)
+3. updatePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*))
+4. revokePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*)
 
-#### updateTokenPermissions(*name*, *name_type*, *permission_level*)
-The `name_type` parameter must be one of `user` or `group`.
-For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+Databricks Permissions Rest API does not have mothods to revoke specific permissions. That's why revokePermissions method of this library is implemeted as a sequential call of Get and Replace methods of Rest API. If updatePermissins is called simultaneously and executed in between Get and Replace, the results of updatePermissions can be lost. 
 
-#### replaceTokenPermissions(*name*, *name_type*, *permission_level*)
-The `name_type` parameter must be one of `user` or `group`.
-For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+#### Parameter "name"
+Defines the name of a user or a group which permissions are you working with.
 
-#### updateClusterPermissions(*name*, *name_type*, *permission_level*)
-The `name_type` parameter must be one of `user` or `group`.
-For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+#### Parameter "name_type"
+Defines if *name* parameter is a user or a group. Case non-sensitive. Possible values:
+	user
+	group
 
-#### replaceClusterPermissions(*name*, *name_type*, *permission_level*)
-The `name_type` parameter must be one of `user` or `group`.
-For the `permission_level` parameter values see Databricks Rest API 2.0 documentation 
+#### Parameter "permission_level"
+Defines a permission level that you are adding or revoking. See Databricks Permissions Rest API documentation or use getPermissionLevels method for specific object type.
+
+#### Parameter "permission_object"
+Defines the object type. Possible values:
+	Tokens
+	Passwords
+	Cluster
+	Pool
+	Job
+	Notebook
+	Directory
+	RegisteredModel
+
+#### Parameter "permission_object_id"
+Defines the identifier of specific object (optional). Can be number or string. Not applicable for 'Tokens' and 'Passwords' object types.
