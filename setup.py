@@ -5,13 +5,13 @@ with open('README.md', 'r', encoding='utf-8') as rm:
 
 setuptools.setup(
 	name='databricksapi',
-	version='1.1.8',
+	version='1.1.9',
 	description='Python Databricks API wrapper using requests module',
 	long_description=long_description,
 	long_description_content_type='text/markdown',
 	author='Angel Hernandez',
-	url='https://github.com/angel-hernandez91/databricks_api',
-	author_email='ahernandez0691@gmail.com',
+	url='https://github.com/lotnikov/databricks_api',
+	author_email='lotnikov@gmail.com',
 	license='MIT',
 	packages=setuptools.find_packages(),
 	zip_safe=False,
