@@ -42,14 +42,10 @@ class Groups(Databricks.Databricks):
 
 	
 	def listGroupMembers(self, group_name, return_type='json'):
-		endpoint = 'list-members'
+		endpoint = 'list-members?group_name='+group_name
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'group_name': group_name
-		}
-
-		r =  self._get(url, payload)
+		r =  self._get(url)
 
 		if return_type.lower() == 'json':
 			return r
@@ -65,21 +61,17 @@ class Groups(Databricks.Databricks):
 		return self._get(url)
 
 	def listParents(self, name, name_type):
-		endpoint = 'list-parents'
-		url = self._set_url(self._url, self._api_type, endpoint)
 
 		if name_type.lower() == 'user':
-			payload = {
-				'user_name': name,
-			}
+			endpoint = 'list-parents?user_name='+name
 		elif name_type.lower() == 'group':
-			payload = {
-				'group_name': name
-			}
+			endpoint = 'list-parents?group_name='+name
 		else:
 			raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
 
-		return self._get(url, payload)
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		return self._get(url)
 
 	def removeMember(self, name, parent_name, name_type):
 		endpoint = 'remove-member'
