@@ -173,15 +173,10 @@ class Clusters(Databricks.Databricks):
 		return self._post(url, payload)
 
 	def getCluster(self, cluster_id):
-		endpoint = 'get'
+		endpoint = 'get?cluster_id='+cluster_id
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'cluster_id': cluster_id
-		}
-
-		return self._get(url, payload)
-
+		return self._get(url)
 
 	def pinCluster(self, cluster_id):
 		endpoint = 'pin'
