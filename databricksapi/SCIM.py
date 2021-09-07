@@ -18,9 +18,9 @@ class SCIM(Databricks.Databricks):
 
 	def _scim_get(self, url, payload=None):
 		if payload is None:
-			return requests.get(url, headers=self._write_headers, accept=self._accept)
+			return requests.get(url, headers=self._write_headers)
 		else:
-			return requests.get(url, payload=json.dumps(payload), headers=self._write_headers, accept=self._accept)
+			return requests.get(url, payload=json.dumps(payload), headers=self._write_headers)
 
 	def _scim_patch(self, url, payload=None):
 		if payload is None:
