@@ -104,3 +104,36 @@ class Permissions(Databricks.Databricks):
                 raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
         else:
             raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+
+    def updatePermissions(self, name, name_type, permission_level, permission_object, permission_object_id = 0):
+        permission_object_settings = papi.get(permission_object, 'none')
+        if permission_object_settings == 'none':
+            raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            if permission_object_settings['id_needed'] == 0:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint'])
+            else:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+'/'+str(permission_object_id))
+
+            if name_type.lower() == 'user':
+                payload = {"access_control_list": [{"user_name": name, "permission_level": permission_level}]}
+            elif name_type.lower() == 'group':
+                payload = {"access_control_list": [{"group_name": name, "permission_level": permission_level}]}
+            else:
+                raise NameTypeNotSupportedException("The name type '{}' is not supported. Please use either 'user' or 'group' name_types.".format(name_type))
+
+            return self._patch(url, payload)
+
+    def replacePermissions(self, permission_map, permission_object, permission_object_id = 0):
+        permission_object_settings = papi.get(permission_object, 'none')
+        if permission_object_settings == 'none':
+            raise NameTypeNotSupportedException("Permission object '{}' is not supported. Please use one of (Tokens,Passwords,Cluster,Pool,Job,Notebook,Directory,RegisteredModel) object types.".format(permission_object))
+        else:
+            if permission_object_settings['id_needed'] == 0:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint'])
+            else:
+                url = self._set_url(self._url, self._api_type, permission_object_settings['endpoint']+'/'+str(permission_object_id))
+
+            payload = permission_map
+
+            return self._put(url, payload)
