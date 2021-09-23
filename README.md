@@ -540,6 +540,7 @@ The Permissions API allows you to view and manage permissions via the API. The m
 2. getPermissions(*permission_object*, *permission_object_id = 0*)
 3. updatePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*))
 4. revokePermissions(*name*, *name_type*, *permission_level*, *permission_object*, *permission_object_id = 0*)
+5. replacePermissions(*permission_map*, *permission_object*, *permission_object_id = 0*)
 
 Databricks Permissions Rest API does not have mothods to revoke specific permissions. That's why revokePermissions method of this library is implemeted as a sequential call of Get and Replace methods of Rest API. If updatePermissins is called simultaneously and executed in between Get and Replace, the results of updatePermissions can be lost. 
 
@@ -550,6 +551,18 @@ Defines the name of a user or a group which permissions are you working with.
 Defines if *name* parameter is a user or a group. Case non-sensitive. Possible values:
 	user
 	group
+
+#### Parameter "permission_map"
+This is a permission map in JSON format
+example:
+```python
+{"access_control_list":
+	 [
+		 {"user_name": "user", "permission_level": "IS_OWNER"}
+		 {"group_name": "admins", "permission_level": "CAN_MANAGE"}
+	 ]
+}
+```
 
 #### Parameter "permission_level"
 Defines a permission level that you are adding or revoking. See Databricks Permissions Rest API documentation or use getPermissionLevels method for specific object type.
