@@ -81,6 +81,14 @@ class Jobs(Databricks.Databricks):
 
 		return self._post(url, payload)
 
+	def updateJob(self, job_settings):
+		endpoint = 'update'
+		url = self._set_url(self._url, self._api_type, endpoint)
+
+		payload = job_settings
+
+		return self._post(url, payload)
+
 	def batchDelete(self, *args):
 		for job in args:
 			self.deleteJob(job)
@@ -92,14 +100,10 @@ class Jobs(Databricks.Databricks):
 		pass
 
 	def getJob(self, job_id):
-		endpoint = 'get'
+		endpoint = 'get/?job_id='+str(job_id)
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'job_id': job_id
-		}
-
-		return self._get(url, payload)
+		return self._get(url)
 
 	def resetJob(self, job_id, new_settings):
 		endpoint = 'reset'
