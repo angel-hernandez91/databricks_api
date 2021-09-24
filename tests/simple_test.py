@@ -1,6 +1,19 @@
-import os
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0,parentdir) 
+import json
 
+json_string = ""
+json_object = { "name": "Vlad",
+                "childs": [
+                    {"name": "Igor",
+                     "age": 12},
+                    {"name": "Inna",
+                     "age": 14},
+                ]}
+json_add = { "fname": "Ivanoff"}
 
-from databricksapi import Clusters, DBFS, Groups, InstanceProfile, Jobs, Libraries, SCIM, Secrets, Token, Workspace
+json_string = json.dumps(json_object)
+print(json_string)
+
+json_object.update(json_add)
+
+json_string = json.dumps(json_object)
+print(json_string)
