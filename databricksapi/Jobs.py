@@ -176,7 +176,7 @@ class Jobs(Databricks.Databricks):
 		endpoint = 'runs/list'
 
 		if job_id is not None:
-			endpoint = 'runs/list&run_id='+str(job_id)
+			endpoint = 'runs/list?run_id='+str(job_id)
 			
 		if offset is not None:
 			endpoint += '&offset='+str(offset)
