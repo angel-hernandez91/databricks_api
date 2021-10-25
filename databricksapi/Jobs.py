@@ -173,10 +173,9 @@ class Jobs(Databricks.Databricks):
 		return self._post(url, payload)
 
 	def runsList(self, run_type, job_id=None, offset=None, limit=None):
-		endpoint = 'runs/list'
 
 		if job_id is not None:
-			endpoint = 'runs/list?run_id='+str(job_id)
+			endpoint = 'runs/list?job_id='+str(job_id)
 			
 		if offset is not None:
 			endpoint += '&offset='+str(offset)
@@ -194,7 +193,7 @@ class Jobs(Databricks.Databricks):
 			raise RunTypeNotSupportedException(run_type)
 		
 		url = self._set_url(self._url, self._api_type, endpoint)
-
+		
 		return self._get(url)
 
 	def runsGet(self, run_id):
