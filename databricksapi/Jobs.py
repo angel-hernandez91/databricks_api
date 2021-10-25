@@ -173,30 +173,28 @@ class Jobs(Databricks.Databricks):
 		return self._post(url, payload)
 
 	def runsList(self, run_type, job_id=None, offset=None, limit=None):
-		endpoint = 'runs/list'
-		url = self._set_url(self._url, self._api_type, endpoint)
-
-		payload = {}
 
 		if job_id is not None:
-			payload['job_id'] = job_id
-
+			endpoint = 'runs/list?job_id='+str(job_id)
+			
 		if offset is not None:
-			payload['offset'] = offset
+			endpoint += '&offset='+str(offset)
 
 		if limit is not None:
-			payload['limit'] = limit
+			endpoint += '&limit='+str(limit)
 
 		if run_type.lower() == 'active':
-			payload['active_only'] = True
+			endpoint += '&active_only=true'
 		elif run_type.lower() == 'completed':
-			payload['completed_only'] = True
+			endpoint += '&completed_only=true'
 		elif run_type.lower() == 'all':
 			pass
 		else:
 			raise RunTypeNotSupportedException(run_type)
-
-		return self._get(url, payload)
+		
+		url = self._set_url(self._url, self._api_type, endpoint)
+		
+		return self._get(url)
 
 	def runsGet(self, run_id):
 		endpoint = 'runs/get'
