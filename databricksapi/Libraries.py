@@ -22,15 +22,10 @@ class Libraries(Databricks.Databricks):
 
 		return self._get(url, payload)
 
-	def installLibrary(self, cluster_id, libraries):
+	def installLibrary(self,  libraries):
 		endpoint = 'install'
-
 		url = self._set_url(self._url, self._api_type, endpoint)
-
-		payload = {
-			'cluster_id': cluster_id,
-			'libraries': libraries
-		}
+		payload = libraries 
 
 		return self._post(url, payload)
 
