@@ -521,7 +521,7 @@ The Libraries API allows you to install and uninstall libraries and get the stat
 ### Methods
 1. allClusterStatuses(*status*)
 2. clusterStatus(*cluster_id*)
-3. installLibrary(*cluster_id*, *libraries*)
+3. installLibrary(*libraries*)
 4. uninstallLibrary(*cluster_id*, *libraries*)
 
 ## Workspace API
