@@ -13,6 +13,7 @@ papi = {
     'Notebook': {'endpoint': 'notebooks', 'id_needed': 1},
     'Directory': {'endpoint': 'directories', 'id_needed': 1},
     'RegisteredModel': {'endpoint': 'registered_models', 'id_needed': 1},
+    'SQLEndpoint': {'endpoint': 'sql/endpoints', 'id_needed': 1}
 }
 
 
