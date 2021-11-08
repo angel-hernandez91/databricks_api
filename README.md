@@ -577,6 +577,7 @@ Defines the object type. Possible values:
 	Notebook
 	Directory
 	RegisteredModel
+	SQLEndpoint
 
 #### Parameter "permission_object_id"
 Defines the identifier of specific object (optional). Can be number or string. Not applicable for 'Tokens' and 'Passwords' object types.
