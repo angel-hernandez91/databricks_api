@@ -114,3 +114,20 @@ class Databricks:
 			return r.json()
 		except json.JSONDecodeError:
 			print(r.content)
+			
+	def _delete(self, url, payload=None, files=None):
+		headers = {'content_type': 'multipart/form-data', 'authorization': self._token}
+		if payload is None:
+			if files is None:
+				r = requests.put(url, headers=self._headers)
+			else:
+				r = requests.put(url, headers=headers, files=files)
+		else:
+			if files is not None:
+				r = requests.delete(url, data=payload, headers=headers, files=files)
+			else:
+				r = requests.delete(url, data=json.dumps(payload), headers=self._headers)
+		try:
+			return r.json()
+		except json.JSONDecodeError:
+			print(r.content)
