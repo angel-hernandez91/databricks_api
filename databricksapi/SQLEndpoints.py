@@ -41,7 +41,7 @@ class SQLEndpoints(Databricks.Databricks):
 
 		return self._get(url)
 	
-	def updateEndpoint(self, endpoint_id, name=None, cluster_size=None, min_num_clusters=None, max_num_clusters=None, auto_stop_mins=None, tags=Noneб
+	def updateEndpoint(self, endpoint_id, name=None, cluster_size=None, min_num_clusters=None, max_num_clusters=None, auto_stop_mins=None, tags=None,
 			  spot_instance_policy=None, enable_photon=None, enable_serverless_compute=None):
 		endpoint = 'endpoints/'+endpoint_id+'/edit'
 		url = self._set_url(self._url, self._api_type, endpoint)
