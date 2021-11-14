@@ -62,59 +62,12 @@ class Clusters(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-
-	def editCluster(self, worker, worker_type, cluster_id, cluster_name, spark_version, cluster_log_conf,
-					node_type_id, driver_node_type_id=None, spark_conf=None, aws_attributes=None, 
-					ssh_public_keys=None, custom_tags=None, init_scripts=None, spark_env_vars=None,
-					autotermination_minutes=None, enable_elastic_disk=None):
+	def editCluster(self, payload):
 		endpoint = 'edit'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
-		payload = {
-			'cluster_id': cluster_id,
-			'cluster_name': cluster_name,
-			'spark_version': spark_version,
-			'cluster_log_conf': cluster_log_conf,
-			'node_type_id': node_type_id
-		}
-
-		if worker_type.lower() == 'workers':
-			payload['num_workers'] = worker
-		elif worker_type.lower() == 'autoscale':
-			payload['autoscale'] = worker
-		else:
-			raise WorkerTypeNotSupportedException(worker_type)
-
-		if driver_node_type_id is not None:
-			payload['driver_node_type_id'] = driver_node_type_id
-
-		if spark_conf is not None:
-			payload['spark_conf'] = spark_conf
-
-		if aws_attributes is not None:
-			payload['aws_attributes'] = aws_attributes
-
-		if ssh_public_keys is not None:
-			payload['ssh_public_keys'] = ssh_public_keys
-
-		if custom_tags is not None:
-			payload['custom_tags'] = custom_tags
-
-		if init_scripts is not None:
-			payload['init_scripts'] = init_scripts
-
-		if spark_env_vars is not None:
-			payload['spark_env_vars'] = spark_env_vars
-
-		if autotermination_minutes is not None:
-			payload['autotermination_minutes'] = autotermination_minutes
-
-		if enable_elastic_disk is not None:
-			payload['enable_elastic_disk'] = enable_elastic_disk
-
 		return self._post(url, payload)
-
-
+	
 	def startCluster(self, cluster_id):
 		endpoint = 'start'
 		url = self._set_url(self._url, self._api_type, endpoint)
