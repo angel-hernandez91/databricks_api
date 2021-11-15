@@ -62,11 +62,33 @@ class Clusters(Databricks.Databricks):
 
 		return self._post(url, payload)
 
-	def editCluster(self, payload):
+	def editCluster(self, cluster_settings):
 		endpoint = 'edit'
 		url = self._set_url(self._url, self._api_type, endpoint)
+		
+		new_cluster_settings = {}
+		
+		if cluster_settings.get("cluster_id"): new_cluster_settings["cluster_id"] = cluster_settings.get("cluster_id")
+		if cluster_settings.get("cluster_name"): new_cluster_settings["cluster_name"] = cluster_settings.get("cluster_name")
+		if cluster_settings.get("spark_version"): new_cluster_settings["spark_version"] = cluster_settings.get("spark_version")
+		if cluster_settings.get("aws_attributes"): new_cluster_settings["aws_attributes"] = cluster_settings.get("aws_attributes")
+		if cluster_settings.get("node_type_id"): new_cluster_settings["node_type_id"] = cluster_settings.get("node_type_id")
+		if cluster_settings.get("driver_node_type_id"): new_cluster_settings["driver_node_type_id"] = cluster_settings.get("driver_node_type_id")
+		if cluster_settings.get("custom_tags"): new_cluster_settings["custom_tags"] = cluster_settings.get("custom_tags")
+		if cluster_settings.get("cluster_log_conf"): new_cluster_settings["cluster_log_conf"] = cluster_settings.get("cluster_log_conf")
+		if cluster_settings.get("spark_env_vars"): new_cluster_settings["spark_env_vars"] = cluster_settings.get("spark_env_vars")
+		if cluster_settings.get("autotermination_minutes"): new_cluster_settings["autotermination_minutes"] = cluster_settings.get("autotermination_minutes")
+		if cluster_settings.get("enable_elastic_disk"): new_cluster_settings["enable_elastic_disk"] = cluster_settings.get("enable_elastic_disk")
+		if cluster_settings.get("init_scripts"): new_cluster_settings["init_scripts"] = cluster_settings.get("init_scripts")
+		if cluster_settings.get("enable_local_disk_encryption"): new_cluster_settings["enable_local_disk_encryption"] = cluster_settings.get("enable_local_disk_encryption")
+		if cluster_settings.get("autoscale"): new_cluster_settings["autoscale"] = cluster_settings.get("autoscale")
+		if cluster_settings.get("spark_conf"): new_cluster_settings["spark_conf"] = cluster_settings.get("spark_conf")
+		if cluster_settings.get("ssh_public_keys"): new_cluster_settings["ssh_public_keys"] = cluster_settings.get("ssh_public_keys")
+		if cluster_settings.get("docker_image"): new_cluster_settings["docker_image"] = cluster_settings.get("docker_image")
+		if cluster_settings.get("instance_pool_id"): new_cluster_settings["instance_pool_id"] = cluster_settings.get("instance_pool_id")
+		if cluster_settings.get("apply_policy_default_values"): new_cluster_settings["apply_policy_default_values"] = cluster_settings.get("apply_policy_default_values")
 
-		return self._post(url, payload)
+		return self._post(url, new_cluster_settings)
 	
 	def startCluster(self, cluster_id):
 		endpoint = 'start'
