@@ -30,7 +30,7 @@ class Groups(Databricks.Databricks):
 		return self._post(url, payload)
 
 	def createGroup(self, group_name):
-		endpoint = 'group'
+		endpoint = 'create'
 		url = self._set_url(self._url, self._api_type, endpoint)
 
 		payload = {
